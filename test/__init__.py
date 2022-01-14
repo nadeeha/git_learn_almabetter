@@ -1,2 +1,2 @@
 print("hello")
-v = 1
+v = 32
