@@ -2,157 +2,145 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-# Sample data
-df_etf = pd.DataFrame({
-    'ISIN': ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
-    'GICS_Sector_Name': ['Tech', 'Health', 'Finance', 'Energy', 'Health', 'Tech', 'Energy'],
-    'weight': [0.15, 0.10, 0.25, 0.20, 0.05, 0.15, 0.10]
-})
+# ETF and Naive sample data
+dfs_dict = {
+    'ETF A': pd.DataFrame({
+        'ISIN': ['A', 'B', 'C', 'D'],
+        'GICS_Sector_Name': ['Tech', 'Tech', 'Health', 'Health'],
+        'etf_weight': [0.10, 0.05, 0.15, 0.05]
+    }),
+    'ETF B': pd.DataFrame({
+        'ISIN': ['A', 'B', 'C', 'D'],
+        'GICS_Sector_Name': ['Tech', 'Tech', 'Health', 'Health'],
+        'etf_weight': [0.08, 0.06, 0.12, 0.09]
+    })
+}
 
-df_naive = pd.DataFrame({
-    'ISIN': ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
-    'GICS_Sector_Name': ['Tech', 'Health', 'Finance', 'Energy', 'Health', 'Tech', 'Energy'],
-    'weight': [0.20, 0.10, 0.20, 0.10, 0.15, 0.15, 0.10]
-})
+dfs_naive = {
+    'Naive A': pd.DataFrame({
+        'ISIN': ['A', 'B', 'C', 'D'],
+        'GICS_Sector_Name': ['Tech', 'Tech', 'Health', 'Health'],
+        'weight_market_cap': [0.07, 0.05, 0.10, 0.06]
+    }),
+    'Naive B': pd.DataFrame({
+        'ISIN': ['A', 'B', 'C', 'D'],
+        'GICS_Sector_Name': ['Tech', 'Tech', 'Health', 'Health'],
+        'weight_market_cap': [0.06, 0.07, 0.08, 0.07]
+    })
+}
 
+# ACWI IMI universe with market cap
 df_acwi_imi = pd.DataFrame({
-    'isin_blg': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
-    'GICS_Sector_Name': ['Tech', 'Health', 'Finance', 'Energy', 'Health', 'Tech', 'Energy', 'Tech', 'Finance'],
-    'market_cap': [150, 120, 300, 200, 100, 180, 160, 90, 220]
+    'isin_blg': ['A', 'B', 'C', 'D'],
+    'GICS_Sector_Name': ['Tech', 'Tech', 'Health', 'Health'],
+    'Market_Cap_USD': [100, 200, 300, 100]
 })
+df_acwi_imi['mkt_cap_weight_viz'] = df_acwi_imi['Market_Cap_USD'] / df_acwi_imi['Market_Cap_USD'].sum()
 
-# Portfolio dictionaries
-dfs_dict = {'ETF 1': df_etf}
-dfs_naive_port = {'Naive Portfolio': df_naive}
-
-# Compute metrics 1a and 1b
-def compute_heatmap_df(dfs, metric_type, df_universe=None):
-    result = []
-    for name, df in dfs.items():
-        df_unique = df[['ISIN', 'GICS_Sector_Name']].drop_duplicates()
-        total_isins = df_unique['ISIN'].nunique()
-        if metric_type == '1a':
-            counts = df_unique.groupby('GICS_Sector_Name')['ISIN'].nunique() / total_isins
-        elif metric_type == '1b':
-            if df_universe is None:
-                raise ValueError("df_universe is required for metric 1b")
-            total_by_sector = df_unique.groupby('GICS_Sector_Name')['ISIN'].nunique()
-            universe_unique = df_universe[['isin_blg', 'GICS_Sector_Name']].drop_duplicates()
-            global_counts = universe_unique.groupby('GICS_Sector_Name')['isin_blg'].nunique()
-            counts = total_by_sector / global_counts
-        else:
-            continue
-        for sector, val in counts.items():
-            result.append({'ETF': name, 'GICS_Sector_Name': sector, 'Value': val, 'Metric': metric_type})
-    return pd.DataFrame(result)
-
-# Compute metrics 2a, 2b, 2a/2b
-def compute_metric_2ab_all(dfs, df_universe):
+def compute_summary(dfs, df_universe, weight_col):
     results = []
-
-    # 2a
-    df_2a = []
     for name, df in dfs.items():
-        df_unique = df[['ISIN', 'GICS_Sector_Name', 'weight']].drop_duplicates()
-        total_weight = df_unique['weight'].sum()
-        sector_weights = df_unique.groupby('GICS_Sector_Name')['weight'].sum() / total_weight
-        for sector, val in sector_weights.items():
-            df_2a.append({'ETF': name, 'GICS_Sector_Name': sector, 'Value': val, 'Metric': '2a'})
-    df_2a = pd.DataFrame(df_2a)
+        df = pd.merge(
+            df,
+            df_universe[['isin_blg', 'mkt_cap_weight_viz']],
+            left_on='ISIN',
+            right_on='isin_blg',
+            how='left'
+        )
+        df['Active_Multiple'] = df[weight_col] / df['mkt_cap_weight_viz']
+        grouped = df.groupby('GICS_Sector_Name')['Active_Multiple'].agg(Median='median', Max='max').reset_index()
+        grouped['Portfolio'] = name
+        results.append(grouped)
+    melted = pd.concat(results, ignore_index=True).melt(
+        id_vars=['GICS_Sector_Name', 'Portfolio'],
+        value_vars=['Median', 'Max'],
+        var_name='Metric',
+        value_name='Active_Multiple'
+    )
+    return melted
 
-    # 2b
-    df_universe_unique = df_universe[['isin_blg', 'GICS_Sector_Name', 'market_cap']].drop_duplicates()
-    total_mcap = df_universe_unique['market_cap'].sum()
-    sector_mcap_weights = df_universe_unique.groupby('GICS_Sector_Name')['market_cap'].sum() / total_mcap
+# Compute summaries
+df_melt_main = compute_summary(dfs_dict, df_acwi_imi, 'etf_weight')
+df_melt_naive = compute_summary(dfs_naive, df_acwi_imi, 'weight_market_cap')
 
-    df_2b = []
-    for name in dfs.keys():
-        for sector, val in sector_mcap_weights.items():
-            df_2b.append({'ETF': name, 'GICS_Sector_Name': sector, 'Value': val, 'Metric': '2b'})
-    df_2b = pd.DataFrame(df_2b)
+# Pivot tables
+pivot_main_median = df_melt_main[df_melt_main['Metric'] == 'Median'].pivot(index='GICS_Sector_Name', columns='Portfolio', values='Active_Multiple').fillna(0)
+pivot_main_max = df_melt_main[df_melt_main['Metric'] == 'Max'].pivot(index='GICS_Sector_Name', columns='Portfolio', values='Active_Multiple').fillna(0)
+pivot_naive_median = df_melt_naive[df_melt_naive['Metric'] == 'Median'].pivot(index='GICS_Sector_Name', columns='Portfolio', values='Active_Multiple').fillna(0)
+pivot_naive_max = df_melt_naive[df_melt_naive['Metric'] == 'Max'].pivot(index='GICS_Sector_Name', columns='Portfolio', values='Active_Multiple').fillna(0)
 
-    # 2a/2b
-    df_merge = pd.merge(df_2a, df_2b, on=['ETF', 'GICS_Sector_Name'], suffixes=('_2a', '_2b'))
-    df_merge['Value'] = df_merge['Value_2a'] / df_merge['Value_2b']
-    df_merge['Metric'] = '2a/2b'
-    df_2ab = df_merge[['ETF', 'GICS_Sector_Name', 'Value', 'Metric']]
+# Create subplots
+fig = make_subplots(rows=1, cols=2, subplot_titles=["ETF Portfolios", "Naive Portfolios"])
 
-    return pd.concat([df_2a, df_2b, df_2ab], ignore_index=True)
+fig.add_trace(go.Heatmap(
+    z=pivot_main_median.values,
+    x=pivot_main_median.columns,
+    y=pivot_main_median.index,
+    colorscale='Blues',
+    visible=True,
+    colorbar=dict(title='Active Multiple'),
+    name='ETF Median'
+), row=1, col=1)
 
-# Compute all metrics
-df_main = pd.concat([
-    compute_heatmap_df(dfs_dict, '1a'),
-    compute_heatmap_df(dfs_dict, '1b', df_acwi_imi),
-    compute_metric_2ab_all(dfs_dict, df_acwi_imi)
-], ignore_index=True)
+fig.add_trace(go.Heatmap(
+    z=pivot_main_max.values,
+    x=pivot_main_max.columns,
+    y=pivot_main_max.index,
+    colorscale='Blues',
+    visible=False,
+    showscale=False,
+    name='ETF Max'
+), row=1, col=1)
 
-df_naive = pd.concat([
-    compute_heatmap_df(dfs_naive_port, '1a'),
-    compute_metric_2ab_all(dfs_naive_port, df_acwi_imi)
-], ignore_index=True)
+fig.add_trace(go.Heatmap(
+    z=pivot_naive_median.values,
+    x=pivot_naive_median.columns,
+    y=pivot_naive_median.index,
+    colorscale='Greens',
+    visible=True,
+    showscale=False,
+    name='Naive Median'
+), row=1, col=2)
 
-# Pivot helper
-def pivot(df, metric):
-    return df[df['Metric'] == metric].pivot(index='GICS_Sector_Name', columns='ETF', values='Value').fillna(0)
-
-# Build Plotly heatmap
-metrics = ['1a', '1b', '2a', '2b', '2a/2b']
-fig = make_subplots(rows=1, cols=2, subplot_titles=["ETF Heatmap", "Naive Portfolio Heatmap"])
-
-for idx, metric in enumerate(metrics):
-    df_main_pivot = pivot(df_main, metric)
-    df_naive_pivot = pivot(df_naive, metric if metric != '1b' else '1a')  # naive doesn't have 1b
-
-    fig.add_trace(go.Heatmap(
-        z=df_main_pivot.values,
-        x=df_main_pivot.columns,
-        y=df_main_pivot.index,
-        colorscale='Blues',
-        zmin=0,
-        zmax=1,
-        visible=(idx == 0),
-        colorbar=dict(title="Value") if idx == 0 else None,
-        name=f"ETF {metric}"
-    ), row=1, col=1)
-
-    fig.add_trace(go.Heatmap(
-        z=df_naive_pivot.values,
-        x=df_naive_pivot.columns,
-        y=df_naive_pivot.index,
-        colorscale='Greens',
-        zmin=0,
-        zmax=1,
-        visible=(idx == 0),
-        showscale=False,
-        name=f"Naive {metric}"
-    ), row=1, col=2)
+fig.add_trace(go.Heatmap(
+    z=pivot_naive_max.values,
+    x=pivot_naive_max.columns,
+    y=pivot_naive_max.index,
+    colorscale='Greens',
+    visible=False,
+    showscale=False,
+    name='Naive Max'
+), row=1, col=2)
 
 # Dropdown
-dropdown_buttons = [
-    {
-        'label': f"Metric {metric}",
-        'method': 'update',
-        'args': [
-            {'visible': [i == idx or i == idx + len(metrics) for i in range(2 * len(metrics))]},
-            {'title': f"ETF vs Naive Portfolio — Metric {metric}"}
-        ]
-    } for idx, metric in enumerate(metrics)
-]
-
 fig.update_layout(
-    title="ETF vs Naive Portfolio — Metric 1a",
+    title="Median vs Max Active Multiples by Sector",
     width=1000,
     height=600,
     updatemenus=[{
-        'buttons': dropdown_buttons,
+        'buttons': [
+            {
+                'label': 'Median',
+                'method': 'update',
+                'args': [{'visible': [True, False, True, False]},
+                         {'title': 'Median Active Multiples by Sector'}]
+            },
+            {
+                'label': 'Max',
+                'method': 'update',
+                'args': [{'visible': [False, True, False, True]},
+                         {'title': 'Max Active Multiples by Sector'}]
+            }
+        ],
         'direction': 'down',
-        'showactive': True,
         'x': 0.0,
         'xanchor': 'left',
         'y': 1.15,
-        'yanchor': 'top'
+        'yanchor': 'top',
+        'showactive': True
     }]
 )
 
-# Save to HTML
-fig.write_html("heatmap_metrics_1a_1b_2a_2b_active_multiple.html")
+# Save HTML
+fig.write_html("heatmap_median_max_dual.html")
+print("✅ Saved to heatmap_median_max_dual.html")
