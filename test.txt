@@ -1,0 +1,139 @@
+import pandas as pd
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+# Example input data
+sample_data = {
+    'ISIN': ['A', 'A', 'B', 'C', 'C', 'D', 'E', 'F', 'G', 'G', 'H'],
+    'GICS_Sector_Name': ['Tech', 'Tech', 'Health', 'Finance', 'Finance', 'Energy', 'Health', 'Tech', 'Energy', 'Energy', 'Tech'],
+    'Description': ['ETF 1'] * 11
+}
+df_etf = pd.DataFrame(sample_data)
+
+naive_data = {
+    'ISIN': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+    'GICS_Sector_Name': ['Tech', 'Health', 'Finance', 'Energy', 'Health', 'Tech', 'Energy', 'Tech'],
+    'Portfolio': ['Naive'] * 8
+}
+df_naive = pd.DataFrame(naive_data)
+
+acwi_data = {
+    'isin_blg': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'],
+    'GICS_Sector_Name': ['Tech', 'Health', 'Finance', 'Energy', 'Health', 'Tech', 'Energy', 'Tech', 'Finance', 'Health', 'Tech']
+}
+df_acwi_imi = pd.DataFrame(acwi_data)
+
+# Dictionary setup
+dfs_dict = {'ETF 1': df_etf}
+dfs_naive_port = {'Naive Portfolio': df_naive}
+
+# Metric calculator
+def compute_heatmap_df(dfs, metric_type, df_universe=None):
+    result = []
+    for name, df in dfs.items():
+        df_unique = df[['ISIN', 'GICS_Sector_Name']].drop_duplicates()
+        total_isins = df_unique['ISIN'].nunique()
+
+        if metric_type == '1a':
+            counts = df_unique.groupby('GICS_Sector_Name')['ISIN'].nunique() / total_isins
+
+        elif metric_type == '1b':
+            if df_universe is None:
+                raise ValueError("df_universe is required for metric 1b")
+            total_by_sector = df_unique.groupby('GICS_Sector_Name')['ISIN'].nunique()
+            universe_unique = df_universe[['isin_blg', 'GICS_Sector_Name']].drop_duplicates()
+            global_counts = universe_unique.groupby('GICS_Sector_Name')['isin_blg'].nunique()
+            counts = total_by_sector / global_counts
+
+        else:
+            continue
+
+        for sector, val in counts.items():
+            result.append({'ETF': name, 'GICS_Sector_Name': sector, 'Value': val, 'Metric': metric_type})
+
+    return pd.DataFrame(result)
+
+# Compute metrics
+df_main_1a = compute_heatmap_df(dfs_dict, '1a')
+df_main_1b = compute_heatmap_df(dfs_dict, '1b', df_acwi_imi)
+df_naive_1a = compute_heatmap_df(dfs_naive_port, '1a')
+df_main_combined = pd.concat([df_main_1a, df_main_1b], ignore_index=True)
+
+# Pivot helper
+def pivot(df, metric):
+    return df[df['Metric'] == metric].pivot(index='GICS_Sector_Name', columns='ETF', values='Value').fillna(0)
+
+pivot_main_1a = pivot(df_main_combined, '1a')
+pivot_main_1b = pivot(df_main_combined, '1b')
+pivot_naive = df_naive_1a.pivot(index='GICS_Sector_Name', columns='ETF', values='Value').fillna(0)
+
+# Plotly heatmaps side-by-side
+fig = make_subplots(rows=1, cols=2, subplot_titles=["ETF Heatmap (Metric)", "Naive Portfolio (1a)"])
+
+# Left: ETF metrics (1a + 1b toggled)
+fig.add_trace(go.Heatmap(
+    z=pivot_main_1a.values,
+    x=pivot_main_1a.columns,
+    y=pivot_main_1a.index,
+    colorscale='Blues',
+    zmin=0,
+    zmax=1,
+    colorbar=dict(title="Value"),
+    visible=True,
+    name="Metric 1a"
+), row=1, col=1)
+
+fig.add_trace(go.Heatmap(
+    z=pivot_main_1b.values,
+    x=pivot_main_1b.columns,
+    y=pivot_main_1b.index,
+    colorscale='Blues',
+    zmin=0,
+    zmax=1,
+    showscale=False,
+    visible=False,
+    name="Metric 1b"
+), row=1, col=1)
+
+# Right: Naive portfolio static
+fig.add_trace(go.Heatmap(
+    z=pivot_naive.values,
+    x=pivot_naive.columns,
+    y=pivot_naive.index,
+    colorscale='Greens',
+    zmin=0,
+    zmax=1,
+    showscale=False,
+    name="Naive Portfolio"
+), row=1, col=2)
+
+# Dropdown to switch metric
+fig.update_layout(
+    title="ETF vs Naive Portfolio: Sector Coverage",
+    width=1000,
+    height=600,
+    updatemenus=[{
+        'buttons': [
+            {
+                'label': 'Metric 1a: ISIN Count / Portfolio ISIN Count',
+                'method': 'update',
+                'args': [{'visible': [True, False, True]}, {'title': 'ETF vs Naive Portfolio: Metric 1a'}]
+            },
+            {
+                'label': 'Metric 1b: ISIN Count / Global Sector ISIN Count',
+                'method': 'update',
+                'args': [{'visible': [False, True, True]}, {'title': 'ETF vs Naive Portfolio: Metric 1b'}]
+            }
+        ],
+        'direction': 'down',
+        'x': 0.0,
+        'xanchor': 'left',
+        'y': 1.15,
+        'yanchor': 'top',
+        'showactive': True
+    }]
+)
+
+# Save output
+fig.write_html("heatmap_main_vs_naive.html")
+print("✅ Saved to heatmap_main_vs_naive.html")
