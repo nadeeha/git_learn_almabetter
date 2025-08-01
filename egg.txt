@@ -1,0 +1,171 @@
+Below is a step-by-step breakdown of Method 1 (Hybrid Heuristic Score), from raw signals through to final buckets.
+
+
+---
+
+1. Inputs (per L6→Theme mapping)
+
+For each row you already have:
+
+1. Embedding similarity
+A float ∈ [0,1], e.g. 0.78
+(Normalized Euclidean similarity between the L3–L6 text and your theme definition.)
+
+
+2. Flash classification
+One of {invalid, possibly related, valid} from Gemini 2.5 Flash.
+
+
+3. Flash reasoning text
+A free-text explanation, e.g.
+
+> “Coal power plants are critical for defense infrastructure because they provide baseload energy…”
+
+
+
+
+
+
+---
+
+2. Map raw signals to numeric scores
+
+Signal	Raw value	Numeric score 𝑠 ∈ [0,1]
+
+Embedding	emb_sim	Already ∈ [0,1]
+Flash class	flash_label	Map via:
+	– invalid	0.0
+	– possibly related	0.5
+	– valid	1.0
+Reasoning quality	reasoning_text	Compute a composite of three proxies (below)
+
+
+2.1. Reasoning-quality proxies
+
+Compute three sub-scores, each in [0,1]:
+
+1. Length proxy
+
+max_len = 200
+score_length = min(len(reasoning_text), max_len) / max_len
+
+
+2. Keyword-density proxy
+
+keywords = {"because","therefore","thus","indicates","relevant","matches"}
+count = sum(reasoning_text.lower().count(k) for k in keywords)
+score_keywords = min(count, 5) / 5
+
+
+3. Topical-relevance proxy
+
+# embed both texts with your existing encoder
+emb_reason = embed(reasoning_text)
+emb_theme  = embed(theme_definition)
+cos_sim    = cosine_similarity(emb_reason, emb_theme)  # in [-1,1]
+score_topic = (cos_sim + 1) / 2                       # rescaled to [0,1]
+
+
+
+Then average:
+
+reasoning_quality = (score_length + score_keywords + score_topic) / 3
+
+
+---
+
+3. Weighted-sum confidence
+
+Combine the three numeric signals with tunable weights (that sum to 1):
+
+Component	Score variable	Weight
+
+Embedding	emb_sim	0.50
+Flash class	flash_score	0.30
+Reasoning quality	reasoning_quality	0.20
+
+
+Formula:
+
+confidence = (
+    0.50 * emb_sim +
+    0.30 * flash_score +
+    0.20 * reasoning_quality
+)
+# → confidence ∈ [0,1]
+
+
+---
+
+4. Bucket into High / Medium / Low
+
+Choose thresholds based on your tolerance for false positives vs. false negatives. A good starting point:
+
+High confidence:
+
+confidence ≥ 0.75
+
+Medium confidence:
+
+0.50 ≤ confidence < 0.75
+
+Low confidence:
+
+confidence < 0.50
+
+
+You can tune these cutoffs by labeling a small sample of mappings.
+
+
+---
+
+5. Implementation outline (Python-style pseudocode)
+
+def compute_reasoning_quality(text, theme_def, embed_func):
+    # 1. Length
+    L = min(len(text), 200) / 200
+
+    # 2. Keywords
+    kws = {"because","therefore","thus","indicates","relevant","matches"}
+    cnt = sum(text.lower().count(k) for k in kws)
+    K = min(cnt, 5) / 5
+
+    # 3. Topic embedding
+    e_text  = embed_func(text)
+    e_theme = embed_func(theme_def)
+    cos_sim = cosine_similarity(e_text, e_theme)
+    T = (cos_sim + 1) / 2
+
+    return (L + K + T) / 3
+
+def flash_label_score(label):
+    return {"invalid":0.0, "possibly related":0.5, "valid":1.0}[label]
+
+def hybrid_confidence(emb_sim, flash_label, reasoning_text, theme_def, embed_func):
+    s_emb   = emb_sim
+    s_flash = flash_label_score(flash_label)
+    s_rq    = compute_reasoning_quality(reasoning_text, theme_def, embed_func)
+
+    return 0.5*s_emb + 0.3*s_flash + 0.2*s_rq
+
+def bucket(conf):
+    if conf >= 0.75: return "High"
+    if conf >= 0.50: return "Medium"
+    return "Low"
+
+
+---
+
+6. Why this works
+
+Transparency: You see exactly how each signal contributes.
+
+Speed: No extra API calls beyond your existing embeddings.
+
+Flexibility: You can re-weight components or swap in new proxies easily.
+
+Tunable: Thresholds and weights can be calibrated on a small labeled subset before rolling out to all 1,866 items.
+
+
+Let me know if you’d like assistance turning this outline into a production-ready script or integrating it into your existing pipeline!
+
