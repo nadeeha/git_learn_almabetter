@@ -24,6 +24,7 @@ Your task:
 - After deciding final confidence, also decide if the match is Valid or Invalid:
   - Valid Match: Confidence is High or Medium and the connection is direct and meaningful.
   - Invalid Match: Confidence is Low or the connection is indirect, weak, or unrelated.
+- If you downgrade, explicitly mention it in your reasoning and specify whether it was due to low log probability, content mismatch, or both.
 
 ---
 
@@ -51,6 +52,7 @@ Output Format:
 Final Confidence: [High / Medium / Low]
 Match Decision: [Valid / Invalid]
 Judge Reason: [1–3 sentences explaining validation or adjustment]
+Downgrade Cause: [Low Log Probability / Content Mismatch / Both / N/A]
 """.strip()
 
     return prompt
