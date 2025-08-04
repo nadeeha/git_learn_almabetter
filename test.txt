@@ -1,21 +1,56 @@
-def test_confidence_scoring_flash(df, theme_col, theme_definitions, model_name):
-    model = GenerativeModel(model_name)
+def generate_pro_judge_prompt(row, theme_col, theme_definitions):
+    theme_name = theme_col
+    theme_definition = theme_definitions.get(theme_name, "No definition provided.")
 
-    for idx in range(2):  # Test only first 2 rows
-        row = df.iloc[idx]
-        prompt = generate_flash_prompt(row, theme_col, theme_definitions)
+    flash_confidence = row[f"{theme_col}_flash_confidence"]
+    flash_reason = row[f"{theme_col}_flash_reason"]
+    flash_logprob = row.get(f"{theme_col}_flash_logprob", "N/A")
 
-        try:
-            response = model.generate_content(
-                prompt,
-                generation_config={
-                    "temperature": 0.3,
-                    "max_output_tokens": 512
-                }
-            )
-            print(f"\n=== Row {idx + 1} ===")
-            print("Prompt:\n", prompt)
-            print("Response:\n", response.text)
+    prompt = f"""
+You are an expert ESG and thematic investing judge.
 
-        except Exception as e:
-            print(f"Error in Gemini response for row {idx + 1}: {e}")
+You will receive:
+1. Theme details (name + definition)
+2. Revenue stream hierarchy (L1–L6)
+3. Gemini 2.5 Flash confidence rating, reason, and log probability
+
+Your task:
+- Validate the Flash confidence rating strictly against the theme definition and revenue hierarchy.
+- Apply this downgrade rule based on log probability:
+  - If Flash Confidence is High and log probability < -1.0, consider downgrading to Medium unless the link is extremely strong.
+  - If Flash Confidence is Medium and log probability < -1.5, consider downgrading to Low unless the link is strong.
+  - If log probability < -2.0, be highly skeptical unless the link is overwhelming.
+- Do not be lenient — err on the side of stricter judgement.
+- After deciding final confidence, also decide if the match is Valid or Invalid:
+  - Valid Match: Confidence is High or Medium and the connection is direct and meaningful.
+  - Invalid Match: Confidence is Low or the connection is indirect, weak, or unrelated.
+
+---
+
+Theme Name: {theme_name}
+Theme Definition: {theme_definition}
+
+Revenue Hierarchy:
+L1: {row['L1NAME']} – {row['L1DESCRIPTION']}
+L2: {row['L2NAME']} – {row['L2DESCRIPTION']}
+L3: {row['L3NAME']} – {row['L3DESCRIPTION']}
+L4: {row['L4NAME']} – {row['L4DESCRIPTION']}
+L5: {row['L5NAME']} – {row['L5DESCRIPTION']}
+L6: {row['L6NAME']} – {row['L6DESCRIPTION']}
+
+---
+
+Gemini 2.5 Flash Output:
+Confidence: {flash_confidence}
+Reason: {flash_reason}
+Log Probability: {flash_logprob}
+
+---
+
+Output Format:
+Final Confidence: [High / Medium / Low]
+Match Decision: [Valid / Invalid]
+Judge Reason: [1–3 sentences explaining validation or adjustment]
+""".strip()
+
+    return prompt
