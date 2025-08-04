@@ -1,39 +1,21 @@
-def generate_flash_prompt(row, theme_col, theme_definitions):
-    theme_name = theme_col
-    theme_definition = theme_definitions.get(theme_name, "No definition provided.")
+def test_confidence_scoring_flash(df, theme_col, theme_definitions, model_name):
+    model = GenerativeModel(model_name)
 
-    prompt = f"""
-You are an expert in ESG and thematic investing.
+    for idx in range(2):  # Test only first 2 rows
+        row = df.iloc[idx]
+        prompt = generate_flash_prompt(row, theme_col, theme_definitions)
 
-Your task is to assess the confidence level with which a given revenue stream (represented by hierarchical levels L1–L6) fits the given investment theme. Consider whether the theme and the revenue stream have a clear, direct, and specific relationship.
+        try:
+            response = model.generate_content(
+                prompt,
+                generation_config={
+                    "temperature": 0.3,
+                    "max_output_tokens": 512
+                }
+            )
+            print(f"\n=== Row {idx + 1} ===")
+            print("Prompt:\n", prompt)
+            print("Response:\n", response.text)
 
----
-
-Theme Name: {theme_name}  
-Theme Definition: {theme_definition}
-
----
-
-Revenue Classification:  
-L1: {row['L1NAME']} – {row['L1DESCRIPTION']}  
-L2: {row['L2NAME']} – {row['L2DESCRIPTION']}  
-L3: {row['L3NAME']} – {row['L3DESCRIPTION']}  
-L4: {row['L4NAME']} – {row['L4DESCRIPTION']}  
-L5: {row['L5NAME']} – {row['L5DESCRIPTION']}  
-L6: {row['L6NAME']} – {row['L6DESCRIPTION']}
-
----
-
-Instructions:  
-- Based on the information above, assign a confidence level for how strongly the revenue stream fits the theme.  
-- Choose one of the following:
-  - High Confidence: There is a direct, strong, and specific match  
-  - Medium Confidence: There is a partial or moderate thematic relevance  
-  - Low Confidence: The connection is weak, indirect, or non-existent  
-
-Answer format:  
-Confidence: [High / Medium / Low]  
-Reason: [Short justification, 1–2 sentences]
-""".strip()
-
-    return prompt
+        except Exception as e:
+            print(f"Error in Gemini response for row {idx + 1}: {e}")
