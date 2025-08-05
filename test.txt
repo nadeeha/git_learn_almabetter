@@ -56,3 +56,92 @@ Downgrade Cause: [Low Log Probability / Content Mismatch / Both / N/A]
 """.strip()
 
     return prompt
+
+
+
+
+
+
+
+
+
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Example data (replace with your real data)
+df = pd.DataFrame({
+    "flash_confidence": ["High", "Medium", "Low", "High", "Medium", "Low", "High", "Medium", "Low", "High"],
+    "pro_match": ["Valid", "Valid", "Valid", "Invalid", "Invalid", "Invalid", "Invalid", "Valid", "Valid", "Invalid"]
+})
+
+# Decision function (from earlier logic)
+def final_decision_with_review(flash_confidence, pro_match):
+    if flash_confidence == "High" and pro_match == "Valid":
+        return "Accept"
+    elif pro_match == "Invalid" and flash_confidence in ["Medium", "Low"]:
+        return "Reject"
+    else:
+        return "Review"
+
+df["final_decision"] = df.apply(
+    lambda x: final_decision_with_review(x["flash_confidence"], x["pro_match"]),
+    axis=1
+)
+
+# Pivot table for counts
+pivot_counts = pd.pivot_table(
+    df,
+    values="flash_confidence",
+    index="pro_match",
+    columns="flash_confidence",
+    aggfunc="count",
+    fill_value=0
+)
+
+# Create a color mapping for decisions
+decision_colors = {"Accept": "#8BC34A", "Review": "#FFC107", "Reject": "#F44336"}
+
+# Build a DataFrame matching the shape of the pivot table but with colors
+color_matrix = []
+for pro_val in pivot_counts.index:
+    row_colors = []
+    for flash_val in pivot_counts.columns:
+        # Get decision for this combination
+        decision = final_decision_with_review(flash_val, pro_val)
+        row_colors.append(decision_colors[decision])
+    color_matrix.append(row_colors)
+
+# Plot heatmap
+fig, ax = plt.subplots(figsize=(8, 5))
+sns.heatmap(
+    pivot_counts,
+    annot=True,
+    fmt="d",
+    cmap=None,
+    cbar=False,
+    linewidths=1,
+    linecolor="black",
+    square=True,
+    ax=ax
+)
+
+# Overlay cell colors manually
+for y in range(pivot_counts.shape[0]):
+    for x in range(pivot_counts.shape[1]):
+        ax.add_patch(plt.Rectangle(
+            (x, y),
+            1, 1,
+            fill=True,
+            color=color_matrix[y][x],
+            alpha=0.4
+        ))
+
+# Final formatting
+ax.set_xlabel("Flash Confidence")
+ax.set_ylabel("Pro Match")
+ax.set_title("Counts by Flash Confidence and Pro Match\n(Colored by Final Decision)")
+
+plt.show()
