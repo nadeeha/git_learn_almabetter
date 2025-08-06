@@ -1,147 +1,54 @@
-def generate_pro_judge_prompt(row, theme_col, theme_definitions):
+def generate_flash_prompt_strict_l6(row, theme_col, theme_definitions):
     theme_name = theme_col
     theme_definition = theme_definitions.get(theme_name, "No definition provided.")
 
-    flash_confidence = row[f"{theme_col}_flash_confidence"]
-    flash_reason = row[f"{theme_col}_flash_reason"]
-    flash_logprob = row.get(f"{theme_col}_flash_logprob", "N/A")
+    return f"""
+You are an expert in ESG and thematic investing.
 
-    prompt = f"""
-You are an expert ESG and thematic investing judge.
-
-You will receive:
-1. Theme details (name + definition)
-2. Revenue stream hierarchy (L1–L6)
-3. Gemini 2.5 Flash confidence rating, reason, and log probability
-
-Your task:
-- Validate the Flash confidence rating strictly against the theme definition and revenue hierarchy.
-- Apply this downgrade rule based on log probability:
-  - If Flash Confidence is High and log probability < -1.0, consider downgrading to Medium unless the link is extremely strong.
-  - If Flash Confidence is Medium and log probability < -1.5, consider downgrading to Low unless the link is strong.
-  - If log probability < -2.0, be highly skeptical unless the link is overwhelming.
-- Do not be lenient — err on the side of stricter judgement.
-- After deciding final confidence, also decide if the match is Valid or Invalid:
-  - Valid Match: Confidence is High or Medium and the connection is direct and meaningful.
-  - Invalid Match: Confidence is Low or the connection is indirect, weak, or unrelated.
-- If you downgrade, explicitly mention it in your reasoning and specify whether it was due to low log probability, content mismatch, or both.
+Your task is to evaluate how strongly a given revenue stream (represented by a hierarchy of L1–L6 categories) 
+fits the given investment theme.
 
 ---
 
-Theme Name: {theme_name}
+Theme Name: {theme_name}  
 Theme Definition: {theme_definition}
 
-Revenue Hierarchy:
-L1: {row['L1NAME']} – {row['L1DESCRIPTION']}
-L2: {row['L2NAME']} – {row['L2DESCRIPTION']}
-L3: {row['L3NAME']} – {row['L3DESCRIPTION']}
-L4: {row['L4NAME']} – {row['L4DESCRIPTION']}
-L5: {row['L5NAME']} – {row['L5DESCRIPTION']}
-L6: {row['L6NAME']} – {row['L6DESCRIPTION']}
+---
+
+Revenue Classification Hierarchy:
+L1: {row['L1NAME']}_{row['L1DESCRIPTION']}  
+L2: {row['L2NAME']}_{row['L2DESCRIPTION']}  
+L3: {row['L3NAME']}_{row['L3DESCRIPTION']}  
+L4: {row['L4NAME']}_{row['L4DESCRIPTION']}  
+L5: {row['L5NAME']}_{row['L5DESCRIPTION']}  
+L6: {row['L6NAME']}_{row['L6DESCRIPTION']}  ← This is the most specific category and should carry the highest weight in your decision.
 
 ---
 
-Gemini 2.5 Flash Output:
-Confidence: {flash_confidence}
-Reason: {flash_reason}
-Log Probability: {flash_logprob}
+**Strict Confidence Assignment Rules:**
+
+- **High Confidence**:  
+  - The L6 category and description are directly and primarily about the given theme.  
+  - No other themes are equally or more relevant.  
+  - The relationship to the theme definition is clear, specific, and strong.  
+  - L6 must align closely with the theme definition; if L6 is not a strong match, do not assign High.
+
+- **Medium Confidence**:  
+  - The L6 is partially related to the theme, or  
+  - The theme is relevant but not the main focus (other themes also apply), or  
+  - There is some alignment at higher taxonomy levels (L1–L5) but L6 is less relevant.
+
+- **Low Confidence**:  
+  - The L6 category has no clear relationship to the theme definition.  
+  - The match is vague, indirect, or primarily about unrelated topics.
+
+**Special Instruction**:  
+If other theme-related concepts (different from {theme_name}) appear in L6 or higher levels and share relevance, 
+downgrade to Medium unless {theme_name} is clearly dominant.
 
 ---
 
-Output Format:
-Final Confidence: [High / Medium / Low]
-Match Decision: [Valid / Invalid]
-Judge Reason: [1–3 sentences explaining validation or adjustment]
-Downgrade Cause: [Low Log Probability / Content Mismatch / Both / N/A]
+**Answer format**:  
+Confidence: [High / Medium / Low]  
+Reason: [Short justification, 1–2 sentences explaining your choice, referencing L6 importance and any competing themes]
 """.strip()
-
-    return prompt
-
-
-
-
-
-
-
-
-
-
-
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# Example data (replace with your real data)
-df = pd.DataFrame({
-    "flash_confidence": ["High", "Medium", "Low", "High", "Medium", "Low", "High", "Medium", "Low", "High"],
-    "pro_match": ["Valid", "Valid", "Valid", "Invalid", "Invalid", "Invalid", "Invalid", "Valid", "Valid", "Invalid"]
-})
-
-# Decision function (from earlier logic)
-def final_decision_with_review(flash_confidence, pro_match):
-    if flash_confidence == "High" and pro_match == "Valid":
-        return "Accept"
-    elif pro_match == "Invalid" and flash_confidence in ["Medium", "Low"]:
-        return "Reject"
-    else:
-        return "Review"
-
-df["final_decision"] = df.apply(
-    lambda x: final_decision_with_review(x["flash_confidence"], x["pro_match"]),
-    axis=1
-)
-
-# Pivot table for counts
-pivot_counts = pd.pivot_table(
-    df,
-    values="flash_confidence",
-    index="pro_match",
-    columns="flash_confidence",
-    aggfunc="count",
-    fill_value=0
-)
-
-# Create a color mapping for decisions
-decision_colors = {"Accept": "#8BC34A", "Review": "#FFC107", "Reject": "#F44336"}
-
-# Build a DataFrame matching the shape of the pivot table but with colors
-color_matrix = []
-for pro_val in pivot_counts.index:
-    row_colors = []
-    for flash_val in pivot_counts.columns:
-        # Get decision for this combination
-        decision = final_decision_with_review(flash_val, pro_val)
-        row_colors.append(decision_colors[decision])
-    color_matrix.append(row_colors)
-
-# Plot heatmap
-fig, ax = plt.subplots(figsize=(8, 5))
-sns.heatmap(
-    pivot_counts,
-    annot=True,
-    fmt="d",
-    cmap=None,
-    cbar=False,
-    linewidths=1,
-    linecolor="black",
-    square=True,
-    ax=ax
-)
-
-# Overlay cell colors manually
-for y in range(pivot_counts.shape[0]):
-    for x in range(pivot_counts.shape[1]):
-        ax.add_patch(plt.Rectangle(
-            (x, y),
-            1, 1,
-            fill=True,
-            color=color_matrix[y][x],
-            alpha=0.4
-        ))
-
-# Final formatting
-ax.set_xlabel("Flash Confidence")
-ax.set_ylabel("Pro Match")
-ax.set_title("Counts by Flash Confidence and Pro Match\n(Colored by Final Decision)")
-
-plt.show()
