@@ -1,171 +1,138 @@
-Below is a step-by-step breakdown of Method 1 (Hybrid Heuristic Score), from raw signals through to final buckets.
+Here are two polished slide outlines—one on Self‑Consistency and another on Generated Knowledge Prompting—based on the Prompt Engineering Guide and additional authoritative sources. Since I can't access the content in the shared Google links directly, these slides are built using validated summaries from promptingguide.ai, learnprompting.org, and other reliable references.
 
 
 ---
 
-1. Inputs (per L6→Theme mapping)
+Slide 1: Self-Consistency
 
-For each row you already have:
+Title: Self-Consistency in Prompt Engineering
 
-1. Embedding similarity
-A float ∈ [0,1], e.g. 0.78
-(Normalized Euclidean similarity between the L3–L6 text and your theme definition.)
+Key Points:
 
+1. What It Is
 
-2. Flash classification
-One of {invalid, possibly related, valid} from Gemini 2.5 Flash.
-
-
-3. Flash reasoning text
-A free-text explanation, e.g.
-
-> “Coal power plants are critical for defense infrastructure because they provide baseload energy…”
+A technique extending Chain‑of‑Thought (CoT) prompting by generating multiple reasoning paths and selecting the most consistent answer.  .
 
 
 
+2. How It Works
+
+Run the same prompt multiple times to obtain diverse outputs, then apply majority voting or probability-based selection to decide on the final answer.  .
+
+
+
+3. Why It Matters
+
+Boosts accuracy significantly—shown to improve performance on benchmarks like GSM8K, SVAMP, AQuA, StrategyQA, and ARC‑Challenge.  .
+
+
+
+4. Advantages
+
+Enhances reliability and reduces errors compared to single‑shot or greedy CoT prompting.  .
+
+
+
+5. Implementation Steps
+
+Use CoT prompting as usual.
+
+Enable sampling (e.g., temperature > 0).
+
+Generate multiple outputs.
+
+Aggregate results via majority—or probability marginalization.
+
+
+
+
+Visual Aid Suggestion:
+Illustrate the flow: one prompt → multiple CoT paths (A, B, C…) → vote or select consensus → final answer.
+
+
+---
+
+Slide 2: Generated Knowledge Prompting
+
+Title: Generated Knowledge Prompting: Enhancing Prompt Accuracy
+
+Key Points:
+
+1. Overview
+
+A method that prompts the model to generate relevant facts or knowledge before answering the main question, improving accuracy and context awareness.  .
+
+
+
+2. Why It Works
+
+Models often benefit from grounded context—this technique helps anchor responses with generated in‑prompt knowledge.  .
+
+
+
+3. Approaches:
+
+Single‑Step: Ask the model to both generate knowledge and respond in one prompt.
+
+Two-Step:
+
+1. Prompt to generate facts.
+
+
+2. Include those facts in a second prompt to arrive at the final answer.
+
+
+
+This second, staged method typically yields more reliable responses.  .
+
+
+
+4. Use Cases
+
+Particularly helpful in commonsense reasoning tasks, story generation, or any domain where context or background matters.  .
+
+
+
+5. General Benefits
+
+Improves reasoning and factual grounding.
+
+Helps avoid hallucinations or vague answers.
+
+Supports adaptability without full-scale fine-tuning.  .
+
+
+
+
+Visual Aid Suggestion:
+Flow diagram: Prompt → generate knowledge → embed knowledge in follow-up prompt → final informed answer.
+
+
+---
+
+Summary Table
+
+Technique	Core Idea	Strengths
+
+Self-Consistency	Generate multiple CoT outputs and aggregate the most frequent answer	High accuracy, robust reasoning, error reduction
+Generated Knowledge	Let the model produce background knowledge before the main response	Better context, greater factual grounding, improved commonsense
 
 
 
 ---
 
-2. Map raw signals to numeric scores
+Tips for Your Presentation
 
-Signal	Raw value	Numeric score 𝑠 ∈ [0,1]
+Keep slides visually clean—use bullet points and diagrams.
 
-Embedding	emb_sim	Already ∈ [0,1]
-Flash class	flash_label	Map via:
-	– invalid	0.0
-	– possibly related	0.5
-	– valid	1.0
-Reasoning quality	reasoning_text	Compute a composite of three proxies (below)
+Use a consistent color palette and clear fonts.
 
+Optionally include brief examples:
 
-2.1. Reasoning-quality proxies
+Self-Consistency example: math problem “When I was 6, my sister was half my age...” run multiple times → consensus = correct final answer.
 
-Compute three sub-scores, each in [0,1]:
-
-1. Length proxy
-
-max_len = 200
-score_length = min(len(reasoning_text), max_len) / max_len
-
-
-2. Keyword-density proxy
-
-keywords = {"because","therefore","thus","indicates","relevant","matches"}
-count = sum(reasoning_text.lower().count(k) for k in keywords)
-score_keywords = min(count, 5) / 5
-
-
-3. Topical-relevance proxy
-
-# embed both texts with your existing encoder
-emb_reason = embed(reasoning_text)
-emb_theme  = embed(theme_definition)
-cos_sim    = cosine_similarity(emb_reason, emb_theme)  # in [-1,1]
-score_topic = (cos_sim + 1) / 2                       # rescaled to [0,1]
+Generated Knowledge example: ask “List facts about X,” then “Using those facts, answer the question about X.”
 
 
 
-Then average:
-
-reasoning_quality = (score_length + score_keywords + score_topic) / 3
-
-
----
-
-3. Weighted-sum confidence
-
-Combine the three numeric signals with tunable weights (that sum to 1):
-
-Component	Score variable	Weight
-
-Embedding	emb_sim	0.50
-Flash class	flash_score	0.30
-Reasoning quality	reasoning_quality	0.20
-
-
-Formula:
-
-confidence = (
-    0.50 * emb_sim +
-    0.30 * flash_score +
-    0.20 * reasoning_quality
-)
-# → confidence ∈ [0,1]
-
-
----
-
-4. Bucket into High / Medium / Low
-
-Choose thresholds based on your tolerance for false positives vs. false negatives. A good starting point:
-
-High confidence:
-
-confidence ≥ 0.75
-
-Medium confidence:
-
-0.50 ≤ confidence < 0.75
-
-Low confidence:
-
-confidence < 0.50
-
-
-You can tune these cutoffs by labeling a small sample of mappings.
-
-
----
-
-5. Implementation outline (Python-style pseudocode)
-
-def compute_reasoning_quality(text, theme_def, embed_func):
-    # 1. Length
-    L = min(len(text), 200) / 200
-
-    # 2. Keywords
-    kws = {"because","therefore","thus","indicates","relevant","matches"}
-    cnt = sum(text.lower().count(k) for k in kws)
-    K = min(cnt, 5) / 5
-
-    # 3. Topic embedding
-    e_text  = embed_func(text)
-    e_theme = embed_func(theme_def)
-    cos_sim = cosine_similarity(e_text, e_theme)
-    T = (cos_sim + 1) / 2
-
-    return (L + K + T) / 3
-
-def flash_label_score(label):
-    return {"invalid":0.0, "possibly related":0.5, "valid":1.0}[label]
-
-def hybrid_confidence(emb_sim, flash_label, reasoning_text, theme_def, embed_func):
-    s_emb   = emb_sim
-    s_flash = flash_label_score(flash_label)
-    s_rq    = compute_reasoning_quality(reasoning_text, theme_def, embed_func)
-
-    return 0.5*s_emb + 0.3*s_flash + 0.2*s_rq
-
-def bucket(conf):
-    if conf >= 0.75: return "High"
-    if conf >= 0.50: return "Medium"
-    return "Low"
-
-
----
-
-6. Why this works
-
-Transparency: You see exactly how each signal contributes.
-
-Speed: No extra API calls beyond your existing embeddings.
-
-Flexibility: You can re-weight components or swap in new proxies easily.
-
-Tunable: Thresholds and weights can be calibrated on a small labeled subset before rolling out to all 1,866 items.
-
-
-Let me know if you’d like assistance turning this outline into a production-ready script or integrating it into your existing pipeline!
-
+Let me know if you’d like help with actual slide deck formatting (e.g., in PowerPoint or Google Slides), or if you'd like to include real-world examples!
