@@ -1,138 +1,112 @@
-Here are two polished slide outlines—one on Self‑Consistency and another on Generated Knowledge Prompting—based on the Prompt Engineering Guide and additional authoritative sources. Since I can't access the content in the shared Google links directly, these slides are built using validated summaries from promptingguide.ai, learnprompting.org, and other reliable references.
+Got it ✅ — let’s break this into 4 slides so each concept (Self-Consistency and Generated Knowledge Prompting) gets an Intro + How it works/Benefits slide. That way you can present with more clarity without cramming too much on one slide.
 
 
 ---
 
-Slide 1: Self-Consistency
+Slide 1: Self-Consistency — Introduction
 
 Title: Self-Consistency in Prompt Engineering
 
 Key Points:
 
-1. What It Is
+Definition: A prompting technique that improves Chain-of-Thought (CoT) reasoning by sampling multiple reasoning paths.
 
-A technique extending Chain‑of‑Thought (CoT) prompting by generating multiple reasoning paths and selecting the most consistent answer.  .
+Goal: Find the most reliable answer by aggregating outputs instead of relying on a single response.
 
-
-
-2. How It Works
-
-Run the same prompt multiple times to obtain diverse outputs, then apply majority voting or probability-based selection to decide on the final answer.  .
+Why: Models sometimes give different answers depending on random sampling → this method reduces errors.
 
 
-
-3. Why It Matters
-
-Boosts accuracy significantly—shown to improve performance on benchmarks like GSM8K, SVAMP, AQuA, StrategyQA, and ARC‑Challenge.  .
-
-
-
-4. Advantages
-
-Enhances reliability and reduces errors compared to single‑shot or greedy CoT prompting.  .
-
-
-
-5. Implementation Steps
-
-Use CoT prompting as usual.
-
-Enable sampling (e.g., temperature > 0).
-
-Generate multiple outputs.
-
-Aggregate results via majority—or probability marginalization.
-
-
-
-
-Visual Aid Suggestion:
-Illustrate the flow: one prompt → multiple CoT paths (A, B, C…) → vote or select consensus → final answer.
+Visual:
+One question → multiple CoT reasoning paths (A, B, C…)
 
 
 ---
 
-Slide 2: Generated Knowledge Prompting
+Slide 2: Self-Consistency — How It Works & Benefits
 
-Title: Generated Knowledge Prompting: Enhancing Prompt Accuracy
+Title: How Self-Consistency Improves Accuracy
+
+Steps:
+
+1. Use CoT prompting.
+
+
+2. Increase randomness (temperature > 0).
+
+
+3. Generate multiple outputs.
+
+
+4. Select the final answer via majority vote or probability aggregation.
+
+
+
+Benefits:
+
+Improves accuracy on reasoning tasks (e.g., math word problems, commonsense).
+
+More reliable than single-path CoT.
+
+Shown to boost performance in benchmarks like GSM8K, SVAMP, AQuA.
+
+
+Visual:
+Voting diagram → Multiple answers → Final consensus answer.
+
+
+---
+
+Slide 3: Generated Knowledge Prompting — Introduction
+
+Title: Generated Knowledge Prompting
 
 Key Points:
 
-1. Overview
+Definition: Ask the model to generate background knowledge before answering the main question.
 
-A method that prompts the model to generate relevant facts or knowledge before answering the main question, improving accuracy and context awareness.  .
+Goal: Improve context, factual grounding, and reasoning.
 
-
-
-2. Why It Works
-
-Models often benefit from grounded context—this technique helps anchor responses with generated in‑prompt knowledge.  .
+Use Cases: Commonsense reasoning, Q&A, story generation, knowledge-heavy domains.
 
 
-
-3. Approaches:
-
-Single‑Step: Ask the model to both generate knowledge and respond in one prompt.
-
-Two-Step:
-
-1. Prompt to generate facts.
-
-
-2. Include those facts in a second prompt to arrive at the final answer.
-
-
-
-This second, staged method typically yields more reliable responses.  .
-
-
-
-4. Use Cases
-
-Particularly helpful in commonsense reasoning tasks, story generation, or any domain where context or background matters.  .
-
-
-
-5. General Benefits
-
-Improves reasoning and factual grounding.
-
-Helps avoid hallucinations or vague answers.
-
-Supports adaptability without full-scale fine-tuning.  .
-
-
-
-
-Visual Aid Suggestion:
-Flow diagram: Prompt → generate knowledge → embed knowledge in follow-up prompt → final informed answer.
+Visual:
+Prompt → Model generates “fact list” → Then answer.
 
 
 ---
 
-Summary Table
+Slide 4: Generated Knowledge Prompting — Methods & Benefits
 
-Technique	Core Idea	Strengths
+Title: How Generated Knowledge Helps
 
-Self-Consistency	Generate multiple CoT outputs and aggregate the most frequent answer	High accuracy, robust reasoning, error reduction
-Generated Knowledge	Let the model produce background knowledge before the main response	Better context, greater factual grounding, improved commonsense
+Methods:
 
+Single-Step: Generate knowledge + answer in one prompt.
+
+Two-Step (better):
+
+1. Prompt for knowledge.
+
+
+2. Feed it back to answer main query.
+
+
+
+
+Benefits:
+
+Anchors answers with context.
+
+Reduces hallucinations.
+
+Improves reasoning without retraining models.
+
+
+Visual:
+Two-step pipeline diagram (Prompt → Facts → Informed Answer).
 
 
 ---
 
-Tips for Your Presentation
+👉 Would you like me to also draft these 4 slides in a PowerPoint / Google Slides format (with suggested layouts, visuals, and speaker notes), or do you prefer keeping it as structured text you can copy into your slides?
 
-Keep slides visually clean—use bullet points and diagrams.
-
-Use a consistent color palette and clear fonts.
-
-Optionally include brief examples:
-
-Self-Consistency example: math problem “When I was 6, my sister was half my age...” run multiple times → consensus = correct final answer.
-
-Generated Knowledge example: ask “List facts about X,” then “Using those facts, answer the question about X.”
-
-
-
-Let me know if you’d like help with actual slide deck formatting (e.g., in PowerPoint or Google Slides), or if you'd like to include real-world examples!
