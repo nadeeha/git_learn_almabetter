@@ -1,62 +1,107 @@
-def generate_pro_prompt_ifthen(row, theme_col, theme_definitions, flash_confidence, flash_reason, flash_logprob):
-    theme_name = theme_col
-    theme_definition = theme_definitions.get(theme_name, "No definition provided.")
+Perfect — here’s the revised and fully tailored version of your feedback requests with those clarifications included.
+Each message is written in a tone that’s professional, concise, and context-aware, suitable for email or internal feedback tools (like Workday, Outlook, or Viva).
 
-    return f"""
-You are an ESG/thematic investing judge.  
-L6 is the most specific taxonomy level and should carry the most weight.
 
 ---
 
-### Decision Rules
+1. Ankur (Manager – Direct Reporting Manager)
 
-**Downgrade Rules**
-1. IF Flash = High AND logprob < -1.0 THEN downgrade to Medium/Low UNLESS strong evidence.
-2. IF Flash = Medium AND logprob < -1.5 THEN downgrade to Low UNLESS strong evidence.
-3. IF logprob < -2.0 THEN be skeptical; downgrade UNLESS overwhelming link.
-4. IF competing themes equally/more relevant THEN downgrade to Medium.
-5. IF match is weak, vague, or indirect THEN downgrade.
+Subject: Request for Annual Performance Feedback
+Message:
+Hi Ankur,
+As part of my annual performance review, I’d like to request your feedback on my overall contributions this year. I’d especially value your inputs on my project delivery, collaboration within the MLOps working group, and transition into a managerial role through intern management and onboarding of new members.
+Your guidance has been instrumental, and your perspective will help me identify areas to strengthen further in the coming year.
+Thanks for your time and support,
+Nadeeha
 
-**Upgrade Rules**
-6. IF Flash = Medium AND L6 + higher levels show very strong theme alignment AND no competing themes THEN upgrade to High.
-7. IF Flash = Low AND L6 shows overwhelming direct theme alignment AND no competing themes THEN upgrade to Medium/High.
-8. IF logprob is close to 0 AND evidence is strong THEN upgrade.
-
-**Leniency Rule**
-9. IF changing from High→Low or Low→High THEN only change if certain; else move to Medium.
 
 ---
 
-### Agreement
-- IF Final Confidence = Flash Confidence THEN Pro Validation = Valid.  
-- ELSE Pro Validation = Invalid.
+2. Aman (Thematic Portfolio Collaborator & Co-Manager for Interns)
+
+Subject: Request for Performance Feedback
+Message:
+Hi Aman,
+I’m reaching out for your feedback as part of my annual review process. We’ve worked closely on the Thematic Portfolio projects and during the intern management phase, where you managed one intern and I managed another. I’d really appreciate your thoughts on my collaboration, problem-solving, and leadership in those contexts—particularly how effectively I contributed to the joint project outcomes and supported cross-team coordination.
+Thanks so much for sharing your inputs,
+Nadeeha
+
 
 ---
 
-### Output Format
-Final Confidence: [High / Medium / Low]  
-Judge Reason: [1–2 sentences explaining final confidence]  
-Pro Validation: [Valid / Invalid]  
-Pro Validation Reasoning: [1–2 sentences explaining agreement/disagreement]  
-Change Cause: [Low Log Probability / Content Mismatch / Both / N/A]
+3. Amit (Data Science Group Lead & Senior Manager)
+
+Subject: Request for Performance Feedback
+Message:
+Hi Amit,
+As part of my annual performance feedback, I’d appreciate your perspective on my contributions across the year. I’ve had the opportunity to collaborate with you on the Thematic Portfolio work, participate in the MLOps working group under your guidance, and lead intern management and mentoring activities.
+Your feedback on my technical depth, teamwork, and leadership development would be extremely valuable as I continue to grow within the team.
+Thanks for your time and guidance,
+Nadeeha
+
 
 ---
 
-**Theme Name:** {theme_name}  
-**Theme Definition:** {theme_definition}
+4. Subham (Managerial Observer & MLOps Working Group Member)
 
-**Revenue Hierarchy:**  
-L1: {row['L1_NAME']}_{row['L1_DESCRIPTION']}  
-L2: {row['L2_NAME']}_{row['L2_DESCRIPTION']}  
-L3: {row['L3_NAME']}_{row['L3_DESCRIPTION']}  
-L4: {row['L4_NAME']}_{row['L4_DESCRIPTION']}  
-L5: {row['L5_NAME']}_{row['L5_DESCRIPTION']}  
-L6: {row['L6_NAME']}_{row['L6_DESCRIPTION']}
+Subject: Request for Feedback
+Message:
+Hi Subham,
+I’m collecting feedback for my annual performance review and would appreciate your thoughts. You’ve seen my work both during the intern management period and within the MLOps working group, so your perspective on my collaboration, initiative, and technical leadership would mean a lot.
+Thanks in advance for taking the time to share your feedback,
+Nadeeha
+
 
 ---
 
-**Gemini 2.5 Flash Output:**  
-Confidence: {flash_confidence}  
-Reason: {flash_reason}  
-Log Probability: {flash_logprob}
-""".strip()
+5. Bhargav (Managerial Observer & MLOps Working Group Member)
+
+Subject: Request for Feedback
+Message:
+Hi Bhargav,
+As part of my annual performance process, I wanted to request your feedback based on your observations of my work across intern management and the MLOps working group. I’d really value your thoughts on my collaboration, communication, and contribution to team outcomes.
+Appreciate your time and inputs,
+Nadeeha
+
+
+---
+
+6. Suprit, Vinay, and Sarabjit (Core MLOps Working Group Members)
+
+Subject: Request for Feedback – MLOps Working Group
+Message:
+Hi [Suprit/Vinay/Sarabjit],
+As part of my annual feedback process, I’d like to request your inputs based on our collaboration within the MLOps working group. I’d really value your views on how I contribute to our initiatives—be it through technical discussions, coordination, or driving execution—and any suggestions on where I can improve further.
+Thanks for your time and honest feedback,
+Nadeeha
+
+
+---
+
+7. Dhillip (Direct Report – Current)
+
+Subject: Request for Feedback
+Message:
+Hi Dhillip,
+As part of my performance review, I’d like to gather feedback from my direct reports as well. I’d appreciate your candid input on my mentoring and management style—what’s working well and where I can support you better.
+Your perspective helps me improve as a manager and create a more supportive environment for you.
+Thanks,
+Nadeeha
+
+
+---
+
+8. Nandana (Former Intern – Now Converted)
+
+Subject: Request for Feedback
+Message:
+Hi Nandana,
+I’m collecting feedback for my annual review and would love your input. Since we worked closely during your internship, I’d value your thoughts on my mentorship approach, the guidance I provided through your project, and how effectively I supported your transition into a full-time role.
+Thanks for your honest feedback—it really helps me continue improving as a mentor.
+Nadeeha
+
+
+---
+
+Would you like me to now make a short Slack-friendly version (2–3 lines each) that you can directly paste into chats or the HSBC feedback portal?
+These are often requested in parallel, and I can match the tone to your internal style (e.g., friendly but polished).
