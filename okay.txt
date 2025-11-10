@@ -156,3 +156,24 @@ Next year, I aim to contribute to more document-oriented GenAI use cases, expand
 ---
 
 Would you like me to proceed with Goal 5 – Be Commercially Minded in All Decision-Making Processes next?
+
+
+
+
+
+Here’s your self-assessment for Goal 5 – Create Alignment to Our Data & AI Strategy, written in your tone and following the same concise, personal-professional style:
+
+
+---
+
+Goal 5 – Create Alignment to Our Data & AI Strategy
+
+This year, I was actively involved in advancing AI literacy and Generative AI adoption within the team and across stakeholders. While the GenAI use case under the Thematic Portfolio project is still in progress, I’ve been deeply engaged in its design and validation discussions. I also acted as a consultant to non-technical stakeholders, helping them understand GenAI applications and best practices. In parallel, I explored Vertex AI MLOps capabilities, particularly for potential deployment of use cases such as ESG catalogue prediction, aligning with our broader AI strategy and automation goals.
+
+Looking Ahead:
+My key focus for the next year will be to successfully complete deployment and production rollout of the GenAI use case, and to continue driving AI adoption through practical, value-oriented implementations.
+
+
+---
+
+Would you like me to now move to “Be Commercially Minded in All Decision-Making Processes” (Goal 6) next?
