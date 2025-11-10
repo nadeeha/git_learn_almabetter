@@ -98,3 +98,22 @@ These experiences reinforced the importance of balancing innovation with collabo
 ---
 
 Would you like me to compile everything (intro + all sections) into one clean final version of your self-assessment document next?
+
+
+
+Here’s a short, well-structured self-assessment for Goal 2 – Deliver Service Excellence to Our Consumers, written in your personal yet professional tone:
+
+
+---
+
+Goal 2 – Deliver Service Excellence to Our Consumers
+
+This year, I actively contributed to enhancing communication and visibility around ESG initiatives and AI adoption within Asset Management. I consistently updated the Investment Value Stream with progress on ESG-related deliverables, maintained the achievement tracker, and ensured JIRA boards and project dashboards remained current. I contributed content to the DAO newsletter, authored a blog, and led multiple DAO showcase presentations, including an AI training session during the AM DAO Lunch and Learn series. I also supported stakeholders with GenAI use-case approvals and contributed to developing the reliability score framework for GenAI model performance metrics. A highlight was being invited to an AM Bangalore Investment stakeholder dinner in recognition of these collaborative efforts.
+
+Looking Ahead:
+Next year, I aim to strengthen my contribution to consumer survey insights analytics and present at the DAO Townhall to further improve stakeholder engagement and visibility.
+
+
+---
+
+Would you like me to keep this same structure (“summary + looking ahead”) for the remaining goals too?
