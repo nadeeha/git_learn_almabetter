@@ -200,3 +200,33 @@ Overall, she’s been an inspiring and dependable teammate whose contributions h
 ---
 
 Would you like me to make this more formal (for a performance feedback form) or personal (for an appreciation message/email) version next?
+Feedback for [Mentee’s Name] – Internship under Thematic Portfolio Project
+
+It has been great to mentor [Mentee’s Name] during her internship. She has demonstrated strong commitment and a genuine eagerness to learn throughout her time on the project. Despite being a fresher, she has shown commendable effort in understanding both the technical aspects and the underlying business context, which reflects her curiosity and dedication.
+
+She has been very receptive to feedback and has consistently applied it to improve her work — a quality that will serve her well in her career. Her hardworking nature and positive attitude make her a dependable and promising professional.
+
+As an area of continued growth, I would encourage her to keep upskilling and further deepen her understanding of business fundamentals and domain knowledge, which will help her connect technical work with strategic impact even more effectively.
+
+Overall, she has shown excellent progress, and I am confident she will continue to excel in her future roles.
+
+
+Here’s a polished version you can use for performance or mentorship feedback:
+
+
+---
+
+Feedback for [Direct Report’s Name] – Internship under Thematic Portfolio Project
+
+It has been a pleasure to see [Direct Report’s Name] grow during his time on the team. His strong technical skills and enthusiasm for exploring new and emerging technologies — especially in AI and Generative AI — are commendable. He approaches each task with curiosity and a willingness to learn, which reflects his proactive mindset.
+
+He has been very receptive to feedback and demonstrates quick learning and adaptability, which make him a valuable contributor to any project he takes on. His eagerness to engage in discussions and experiment with new ideas adds great energy to the team.
+
+As an area for further growth, I would encourage him to continue upskilling and start taking on more responsibilities with full ownership of specific tasks or projects. Developing that sense of end-to-end accountability will help him strengthen his leadership potential and technical depth even further.
+
+Overall, he has shown great promise, and I look forward to seeing his continued growth and impact in future projects.
+
+
+---
+
+Would you like me to make a shorter 3–4 line version suitable for a feedback form as well?
