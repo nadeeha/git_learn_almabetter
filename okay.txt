@@ -135,3 +135,24 @@ I plan to focus on code refactoring and usage guide creation for the Thematic Po
 ---
 
 Would you like me to now draft the next goal — “Be commercially minded in all decision-making processes”?
+
+
+
+
+
+Here’s your self-assessment for Goal 4 – Support Delivery Excellence Across Strategic Programmes of Work, aligned with your tone and structure from earlier goals:
+
+
+---
+
+Goal 4 – Support Delivery Excellence Across Strategic Programmes of Work
+
+This year, I focused on delivering high-impact work with precision and timeliness. I prioritized the Thematic Portfolio project, which carried significant visibility and strategic value, ensuring that all deliverables met expected quality standards and deadlines. I developed several monitoring and validation frameworks for Thematics as part of ongoing innovation, helping strengthen data integrity and model reliability across the workflow.
+
+Looking Ahead:
+Next year, I aim to contribute to more document-oriented GenAI use cases, expanding automation in data curation and knowledge management to further improve efficiency and scalability across teams.
+
+
+---
+
+Would you like me to proceed with Goal 5 – Be Commercially Minded in All Decision-Making Processes next?
