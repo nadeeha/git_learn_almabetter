@@ -11,3 +11,26 @@ This year has been a fulfilling journey with contributions across multiple areas
 ---
 
 Would you like me to make the transition sentence lead smoothly into the first goal (so it reads like a continuous review document)?
+
+
+
+
+
+
+Here’s your MLOps Working Group section divided into Overview and Contributions, keeping it crisp and aligned with your self-assessment tone:
+
+
+---
+
+Project Summary – MLOps Working Group
+
+Overview
+As part of the MLOps Working Group, I took a leading role in exploring and operationalising Vertex AI for model lifecycle management. The focus was to assess how Vertex AI could streamline training, deployment, monitoring, and governance within HSBC AM’s AI ecosystem. We demonstrated its capabilities in Maple Quad, presenting a live end-to-end example of how model workflows could be automated and scaled securely. The initiative positioned the team to adopt a more standardised and efficient approach to MLOps across projects.
+
+Contributions
+I coordinated cross-team discussions, designed initial workflows, and identified a pilot project to pioneer Vertex AI deployment in production. I guided the team through technical evaluation sessions, documented key integration challenges, and worked closely with engineering to align on environment setup, governance, and CI/CD practices. I also supported showcasing the prototype during internal forums, highlighting its potential to reduce manual deployment time and improve traceability. The project is now progressing toward full implementation as a reference model for future MLOps efforts.
+
+
+---
+
+Would you like me to add a short “Reflection” section afterward to summarise what went well and what you plan to improve for next year?
