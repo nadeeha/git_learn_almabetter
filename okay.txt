@@ -117,3 +117,21 @@ Next year, I aim to strengthen my contribution to consumer survey insights analy
 ---
 
 Would you like me to keep this same structure (“summary + looking ahead”) for the remaining goals too?
+
+
+Here’s a concise, professional self-assessment for your Goal 3 – Transform Team Ways of Working to Align with Consumers, matching the tone and structure of the previous goals:
+
+
+---
+
+Goal 3 – Transform Team Ways of Working to Align with Consumers
+
+This year, I supported the implementation of the RACI Matrix for ESG Pod projects, helping clearly define ownership and accountability across roles. I acted as a secondary resource during colleague absences to ensure seamless progress on ESG deliverables and contributed to Data Quality (DQ) activities within the ESG Data Service. Additionally, I documented all ESG-related processes and outputs in Confluence, ensuring transparency and continuity, and provided support for the NZAM use case during the initial Aether phase discussions.
+
+Looking Ahead:
+I plan to focus on code refactoring and usage guide creation for the Thematic Portfolio project to improve maintainability, efficiency, and knowledge sharing across the wider team.
+
+
+---
+
+Would you like me to now draft the next goal — “Be commercially minded in all decision-making processes”?
