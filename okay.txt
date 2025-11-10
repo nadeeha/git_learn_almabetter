@@ -34,3 +34,26 @@ I coordinated cross-team discussions, designed initial workflows, and identified
 ---
 
 Would you like me to add a short “Reflection” section afterward to summarise what went well and what you plan to improve for next year?
+
+
+
+Here’s how you could frame the Intern and Line Management section of your self-assessment so it reads naturally and shows mentoring depth.
+
+
+---
+
+Intern Management and Line Leadership
+
+Overview
+This year, my role evolved from mentoring interns to taking on formal line-management responsibilities as one of them transitioned into a full-time position. This shift required balancing technical guidance with people-leadership skills—helping new team members navigate expectations, understand workflows, and build confidence as they adapted to the team culture.
+
+Contributions
+I established a structured learning plan with clear milestones and regular one-to-one sessions focused on progress review, technical challenges, and professional development. I actively gathered feedback from senior team members and translated it into actionable coaching points, helping the mentees strengthen their analytical and communication skills. I also worked on building trust and psychological safety, ensuring they felt supported while taking ownership of their work.
+
+Reflection
+This experience reinforced my belief in mentorship as a key part of leadership. I learned to adapt my communication style to different learning needs and to strike a balance between autonomy and guidance. Moving forward, I aim to formalise this approach by developing a lightweight onboarding and mentoring framework that can be reused for future hires or interns.
+
+
+---
+
+Would you like me to integrate this directly into your main self-assessment sequence after the MLOps Working Group section?
