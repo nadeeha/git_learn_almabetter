@@ -80,3 +80,21 @@ This experience deepened my understanding of data governance and platform transi
 ---
 
 Would you like me to keep adding similar structured sections (overview, contribution, reflection) for your other key areas next — like Thematic Portfolio Project, Signals using GenAI, and Lunch & Learn / DAO leadership?
+
+
+Here’s a concise, natural version that combines all your other key contributions and achievements into a single flowing paragraph with a short reflection at the end:
+
+
+---
+
+Other Key Contributions and Achievements
+
+Throughout the year, I contributed actively beyond project delivery through initiatives that promoted knowledge sharing, visibility, and collaboration within the team. I delivered an AI Literacy session for the AM DAO Lunch and Learn series, published a supporting blog, and contributed to the AM Data Science Newsletter. I was also involved in recruitment activities, participated in knowledge sessions, and represented the Data Science team in multiple internal showcases and workshops, including presenting the Thematic Portfolio Project to SMEs. Additionally, I supported the GenAI use-case approval process, ensuring responsible adoption across AM. On the learning front, I strengthened my expertise in MLOps and GenAI, focusing on prompt engineering best practices, and had the honor of representing India as a finalist in the Global Prompt Engineering Championship (GPEC) held in Dubai.
+
+Reflection
+These experiences reinforced the importance of balancing innovation with collaboration and communication. They allowed me to contribute not just through technical delivery, but also by helping shape our collective learning culture. Moving forward, I aim to continue combining technical depth with knowledge sharing to drive greater alignment and adoption of AI and data-driven practices across the organization.
+
+
+---
+
+Would you like me to compile everything (intro + all sections) into one clean final version of your self-assessment document next?
