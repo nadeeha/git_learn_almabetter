@@ -57,3 +57,26 @@ This experience reinforced my belief in mentorship as a key part of leadership. 
 ---
 
 Would you like me to integrate this directly into your main self-assessment sequence after the MLOps Working Group section?
+
+
+
+Here’s how you could frame that section to clearly show your role in ESG project consulting, documentation, and the Octopus initiative:
+
+
+---
+
+ESG Pod and Project Octopus Support
+
+Overview
+Alongside core project responsibilities, I contributed significantly to ESG Pod initiatives by providing project consulting support across ongoing and completed ESG projects. This included reviewing implementation logic, aligning analytical outputs to ESG data standards, and assisting with quality checks to ensure consistency across deliverables. I also took the lead in documenting these projects in Confluence, creating a structured knowledge base that captures methodology, data lineage, and lessons learned—ensuring transparency and reusability for future ESG workstreams.
+
+Contributions
+In addition, I supported Project Octopus, a cross-functional effort focused on the transition and validation of CAM data sources to the new ecosystem. My role involved identifying dependencies, validating ESG-relevant data points, and helping ensure smooth migration and integration with downstream analytics pipelines. This activity remains ongoing and has helped strengthen collaboration between ESG data and engineering teams.
+
+Reflection
+This experience deepened my understanding of data governance and platform transition processes. Going forward, I plan to continue improving cross-domain documentation practices and contribute toward standardizing ESG data source validation frameworks to further improve operational efficiency.
+
+
+---
+
+Would you like me to keep adding similar structured sections (overview, contribution, reflection) for your other key areas next — like Thematic Portfolio Project, Signals using GenAI, and Lunch & Learn / DAO leadership?
