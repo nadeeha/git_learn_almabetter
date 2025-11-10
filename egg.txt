@@ -3,3 +3,54 @@ defense_defs = {
     "broad": "Companies engaged in defense, security, and government technology — covering military platforms, weapons, aerospace, naval and space systems, as well as cybersecurity, network infrastructure, secure communications, government IT, public-sector software, and critical-infrastructure technologies that support national resilience and mission-critical operations.",
     "tight": "Companies developing and supporting advanced technologies, systems, and platforms for military, defense, and national security applications, including weapons, aerospace, naval, and cyber-defense systems."
 }
+
+
+
+# ============================================================
+# 🪖 DEFENSE THEME: BROAD SUB-THEME DEFINITIONS (8 SEEDS)
+# Optimized for text-embedding-005
+# Purpose: capture all major defense facets for multi-seed similarity
+# ============================================================
+
+DEFENSE_SEEDS = [
+
+    # ------------------------------------------------------------
+    # 1️⃣ CORE DEFENSE & NATIONAL SECURITY
+    # ------------------------------------------------------------
+    "Companies developing technologies, systems, and services that strengthen national defense, military capability, and national security across land, sea, air, and digital domains.",
+
+    # ------------------------------------------------------------
+    # 2️⃣ WEAPONS & MILITARY PLATFORMS
+    # ------------------------------------------------------------
+    "Manufacturers of advanced weapons, munitions, and military platforms including aircraft, armored vehicles, naval ships, and missile systems used in defense operations.",
+
+    # ------------------------------------------------------------
+    # 3️⃣ AEROSPACE, SPACE & STRATEGIC SYSTEMS
+    # ------------------------------------------------------------
+    "Firms engaged in aerospace and space technologies such as satellites, launch systems, drones, and surveillance platforms supporting defense and intelligence missions.",
+
+    # ------------------------------------------------------------
+    # 4️⃣ CYBERSECURITY & NETWORK INFRASTRUCTURE
+    # ------------------------------------------------------------
+    "Organizations providing cybersecurity, encryption, secure communications, and resilient network infrastructure for defense, government, and critical national systems.",
+
+    # ------------------------------------------------------------
+    # 5️⃣ INTELLIGENCE, SURVEILLANCE & RECONNAISSANCE (ISR)
+    # ------------------------------------------------------------
+    "Developers of intelligence, surveillance, and reconnaissance solutions including sensors, radars, analytics, and autonomous systems for situational awareness and threat detection.",
+
+    # ------------------------------------------------------------
+    # 6️⃣ GOVERNMENT IT & PUBLIC SECTOR TECHNOLOGY
+    # ------------------------------------------------------------
+    "Providers of government IT, digital infrastructure, and software solutions that enable secure operations, data management, and mission-critical defense communications.",
+
+    # ------------------------------------------------------------
+    # 7️⃣ AI, ROBOTICS & EMERGING DEFENSE TECHNOLOGIES
+    # ------------------------------------------------------------
+    "Companies applying artificial intelligence, robotics, autonomous systems, and advanced analytics to modernize defense capabilities and national security operations.",
+
+    # ------------------------------------------------------------
+    # 8️⃣ CRITICAL INFRASTRUCTURE & DUAL-USE TECHNOLOGIES
+    # ------------------------------------------------------------
+    "Organizations safeguarding or enabling critical infrastructure such as energy, transportation, and communications through defense-grade or dual-use technologies."
+]
