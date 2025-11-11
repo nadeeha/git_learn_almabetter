@@ -1,17 +1,4 @@
-Here’s a simple, natural, one-paragraph version of your introduction, written in your own style and voice:
-
-
----
-
-Introduction
-
-This year has been a fulfilling journey with contributions across multiple areas of data science and leadership. I started the year with the successful delivery of the ESG Score Project for IQ Lab and moved on to leading and contributing to the Thematic Portfolio project, focusing on signal development and completing the Green Share calculation. Alongside project delivery, I’ve been actively involved in mentoring interns, several of whom transitioned to full-time roles, and have led or presented in multiple Data Lunch & Learn sessions and internal showcases. These experiences have helped me strengthen both my technical and leadership skills, while contributing to collaboration, knowledge sharing, and innovation across the team.
-
-
----
-
-Would you like me to make the transition sentence lead smoothly into the first goal (so it reads like a continuous review document)?
-
+j
 
 
 
