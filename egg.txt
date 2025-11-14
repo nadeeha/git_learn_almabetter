@@ -1,56 +1,81 @@
-defense_defs = {
-    "balanced": "Companies providing technologies, systems, and services that strengthen national defense and security — including military platforms, weapons, aerospace and naval systems, cyber and network security, intelligence and surveillance solutions, and government or critical-infrastructure IT supporting mission-critical operations.",
-    "broad": "Companies engaged in defense, security, and government technology — covering military platforms, weapons, aerospace, naval and space systems, as well as cybersecurity, network infrastructure, secure communications, government IT, public-sector software, and critical-infrastructure technologies that support national resilience and mission-critical operations.",
-    "tight": "Companies developing and supporting advanced technologies, systems, and platforms for military, defense, and national security applications, including weapons, aerospace, naval, and cyber-defense systems."
-}
+Below is a polished, structured, professional yet warm feedback draft for your reportee, following the same style and tone as the feedback you received — with three sections: Overall Feedback, What Went Well, and Areas of Improvement.
+I’ve incorporated everything you shared, including stakeholder sentiment, your own observations, and the nature of projects (ESG Risk, Cost Project, Aether/DQCC, Working Group, Fund Ops).
+
+
+---
+
+Feedback for Dhillip
+
+1. Overall Feedback
+
+Dhillip has had an impressive and impactful year, especially considering this was his transition from intern to full-time Data Analyst. He has demonstrated strong technical aptitude, curiosity to learn, and a proactive mindset that shows clear potential for long-term growth in the team. His ability to adapt quickly to new domains — whether ESG, Fund Operations, or DQ frameworks — reflects both resilience and a genuine interest in expanding his expertise.
+
+Across multiple projects, he has consistently shown reliability, ownership, and a positive attitude, earning appreciation from stakeholders and peers alike. His growth in confidence, presentation skills, and stakeholder understanding has been clearly visible throughout the year. Overall, Dhillip has laid a strong foundation and is on a promising path toward becoming an independent and impactful contributor in the team.
+
+
+---
+
+2. What Went Well
+
+Strong Delivery & Reliability: Demonstrated exceptional discipline in meeting deadlines and delivering high-quality outputs across ESG Risk, Cost Project, Aether (DQCC), and Fund Ops.
+
+Technical Competence for a Fresher: Quickly understood technical concepts and applied them effectively, showing strong analytical and coding ability early in his career.
+
+Fast Domain Learning: Gained meaningful domain knowledge in a short time — especially ESG, risk frameworks, data quality, and fund operations.
+
+Stakeholder Understanding: Started proactively understanding requirements without needing extensive guidance and has improved significantly in managing expectations.
+
+Working Group Contribution: Actively contributed to discussions, brought thoughtful ideas, and supported technical activities within the MLOps / DAO working group.
+
+Team Collaboration: Maintained positive relationships with teammates, consistently supported others on ESG Risk projects, and communicated well within the pod.
+
+Aether Project Performance: Showed strong enthusiasm for this challenging initiative and has been contributing meaningfully to DQ and control-centre activities.
+
+Improved Presentation Skills: Has shown clear growth in explaining work to stakeholders; received positive feedback from business partners.
+
+Successful Transition to FTE: Made a smooth shift from intern to full-time employee — demonstrating maturity, responsibility, and initiative that reflect strong long-term potential.
 
 
 
-# ============================================================
-# 🪖 DEFENSE THEME: BROAD SUB-THEME DEFINITIONS (8 SEEDS)
-# Optimized for text-embedding-005
-# Purpose: capture all major defense facets for multi-seed similarity
-# ============================================================
+---
 
-DEFENSE_SEEDS = [
+3. Areas of Improvement
 
-    # ------------------------------------------------------------
-    # 1️⃣ CORE DEFENSE & NATIONAL SECURITY
-    # ------------------------------------------------------------
-    "Companies developing technologies, systems, and services that strengthen national defense, military capability, and national security across land, sea, air, and digital domains.",
+Planning & Prioritisation: With involvement in multiple projects, better time-management, structured planning, and clearer prioritisation will be important going forward.
 
-    # ------------------------------------------------------------
-    # 2️⃣ WEAPONS & MILITARY PLATFORMS
-    # ------------------------------------------------------------
-    "Manufacturers of advanced weapons, munitions, and military platforms including aircraft, armored vehicles, naval ships, and missile systems used in defense operations.",
+Engagement in Team Meetings: Can be more vocal in discussions, share opinions confidently, and engage more in peer conversations and wider DAO forums.
 
-    # ------------------------------------------------------------
-    # 3️⃣ AEROSPACE, SPACE & STRATEGIC SYSTEMS
-    # ------------------------------------------------------------
-    "Firms engaged in aerospace and space technologies such as satellites, launch systems, drones, and surveillance platforms supporting defense and intelligence missions.",
+Presentation & Communication: While improved, can further enhance clarity, storytelling, and stakeholder-oriented communication.
 
-    # ------------------------------------------------------------
-    # 4️⃣ CYBERSECURITY & NETWORK INFRASTRUCTURE
-    # ------------------------------------------------------------
-    "Organizations providing cybersecurity, encryption, secure communications, and resilient network infrastructure for defense, government, and critical national systems.",
+Develop Leadership Foundations: Expected to take on more responsibility in the future — should start practicing ownership, decision-making, and mentoring behaviours.
 
-    # ------------------------------------------------------------
-    # 5️⃣ INTELLIGENCE, SURVEILLANCE & RECONNAISSANCE (ISR)
-    # ------------------------------------------------------------
-    "Developers of intelligence, surveillance, and reconnaissance solutions including sensors, radars, analytics, and autonomous systems for situational awareness and threat detection.",
+Reduce Dependency: Should gradually become a self-starter by taking full ownership of tasks and reducing reliance on senior members for direction.
 
-    # ------------------------------------------------------------
-    # 6️⃣ GOVERNMENT IT & PUBLIC SECTOR TECHNOLOGY
-    # ------------------------------------------------------------
-    "Providers of government IT, digital infrastructure, and software solutions that enable secure operations, data management, and mission-critical defense communications.",
+Awareness of HSBC Policies: Should remain mindful of internal processes, policies, and compliance expectations to avoid accidental breaches.
 
-    # ------------------------------------------------------------
-    # 7️⃣ AI, ROBOTICS & EMERGING DEFENSE TECHNOLOGIES
-    # ------------------------------------------------------------
-    "Companies applying artificial intelligence, robotics, autonomous systems, and advanced analytics to modernize defense capabilities and national security operations.",
+Knowledge Sharing: More frequent sharing of learnings, documentation, and walkthroughs will increase team efficiency.
 
-    # ------------------------------------------------------------
-    # 8️⃣ CRITICAL INFRASTRUCTURE & DUAL-USE TECHNOLOGIES
-    # ------------------------------------------------------------
-    "Organizations safeguarding or enabling critical infrastructure such as energy, transportation, and communications through defense-grade or dual-use technologies."
-]
+Upskilling:
+
+Data Engineering: Strengthen skills in pipelines, DQ, automation, and scalable frameworks.
+
+GenAI: Explore prompt engineering, model evaluation, and potential GenAI use cases.
+
+Domain Knowledge: Deepen understanding of ESG, Fund Ops, and risk frameworks — critical for future ownership.
+
+
+Broader AM Involvement: Participate more in ecosystem initiatives like volunteering, NOVA, coaching circle, and wider AM/DAO events.
+
+Seek Opportunities & Stretch Assignments: Should proactively identify learning opportunities and take initiative to grow beyond assigned tasks.
+
+
+
+---
+
+If you'd like, I can also:
+✅ Write a shorter version
+✅ Make it more formal / more personal
+✅ Add a 1-line summary at the top
+✅ Add bullets summarizing stakeholder feedback
+
+Just tell me!
