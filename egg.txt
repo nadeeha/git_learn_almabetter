@@ -1,30 +1,154 @@
-Here is an optimized, crisp, non-repetitive version while keeping every theme intact. I’ve grouped overlapping points, removed duplicates, and improved flow:
+import pandas as pd
+import math
 
+def _safe_str(x):
+    if x is None:
+        return ""
+    if isinstance(x, float) and math.isnan(x):
+        return ""
+    return str(x)
 
----
+def build_theme_prompt(row: pd.Series, theme_name: str, use_description: bool = True) -> str:
+    """
+    Generic theme prompt builder.
+    Replaces all 'water' references with {theme_name} dynamically.
 
-Optimized & Consolidated Areas of Development
+    Expected columns:
+      - 'isin'
+      - 'entity_proper_name'
+      - f'{theme_name.lower()}_core_pct'
+      - f'{theme_name.lower()}_eligible_pct'
+      - f'{theme_name.lower()}_eligible_revenue_USD'
+      - 'description_ref_text'
+      - 'bsn_revenue_l6_split'
+      - 'l6_name_category'
+    """
 
-1. Planning, Prioritization & Ownership
-Strengthen time management and structured planning to balance multiple projects more effectively. Begin taking fuller ownership of tasks, reduce dependency on senior colleagues, and practice proactive decision-making to build leadership foundations.
+    theme = theme_name
+    theme_lower = theme_name.lower()
 
-2. Communication & Engagement
-Be more vocal and confident in team discussions, actively contribute perspectives, and continue improving clarity, storytelling, and stakeholder-oriented communication—both in presentations and day-to-day interactions.
+    isin = _safe_str(row.get("isin"))
+    entity_proper_name = _safe_str(row.get("entity_proper_name"))
+    core_pct = _safe_str(row.get(f"{theme_lower}_core_pct"))
+    eligible_pct = _safe_str(row.get(f"{theme_lower}_eligible_pct"))
+    eligible_revenue_usd = _safe_str(row.get(f"{theme_lower}_eligible_revenue_USD"))
+    bsn_revenue_l6_split = _safe_str(row.get("bsn_revenue_l6_split"))
+    l6_name_category = _safe_str(row.get("l6_name_category"))
+    description_ref_text = _safe_str(row.get("description_ref_text"))
 
-3. Knowledge of Internal Processes
-Maintain strong awareness of HSBC policies, compliance requirements, and internal procedures to avoid inadvertent breaches.
+    if not use_description:
+        prompt = f"""
+You are an expert in thematic investing and corporate activity classification across global industries including infrastructure, industrials, manufacturing, technologies, engineered products, and domain-specific value chains.
 
-4. Knowledge Sharing & Collaboration
-Increase the frequency of documentation, walkthroughs, and sharing learnings with peers to support team growth and collective productivity.
+Your goal: Determine whether this company should be included in the global "{theme}" thematic universe.  
+You are allowed to use:
+- Your world knowledge about industries, products, and business models
+- Your ability to infer what each L6 name implies about real-world activity
+- Understanding of how certain business segments connect to {theme} activities
+- Logical reasoning for ambiguous or multi-use segments
 
-5. Technical & Domain Upskilling
-Continue building depth in Data Engineering (pipelines, DQ, automation, scalable frameworks), expand GenAI skills (prompt engineering, model evaluation, use-case exploration), and further strengthen Asset Management domain expertise for future ownership.
+You will receive structured data about a company:
 
-6. Broader AM Participation & Growth Mindset
-Engage more in wider AM initiatives such as volunteering, NOVA, coaching circles, and other AMDAO activities. Actively seek stretch assignments and learning opportunities that help expand scope and accelerate growth.
+- isin
+- entity_proper_name
+- {theme_lower}_core_pct: % revenue from L6 categories classified as “core {theme}”
+- {theme_lower}_eligible_pct: % revenue from L6 “eligible under condition” for {theme}
+- {theme_lower}_eligible_revenue_USD: absolute revenue from eligible-under-condition {theme} activities
+- bsn_revenue_l6_split: "business_segment_name: l6_name, l6_revenue_pct" (multiple)
+- l6_name_category: mapping "l6_name: category" (core / eligibility / unknown / non-theme)
 
+Your tasks:
+1. Analyze all L6 names and business segments using your understanding of how industries relate to {theme}.
+2. Interpret core and eligible % values in context.
+3. Infer whether the company’s business model is realistically aligned with the {theme} theme.
+4. Use your own industrial reasoning to classify ambiguous segments.
+5. Decide:
+   - "include"
+   - "exclude"
+   - "borderline_review"
 
----
+Here is the company’s data:
 
-If you'd like, I can also rewrite this in a more formal tone, bullet-point format, or as a paragraph for a performance review.
+isin: {isin}
+entity_proper_name: {entity_proper_name}
+{theme_lower}_core_pct: {core_pct}
+{theme_lower}_eligible_pct: {eligible_pct}
+{theme_lower}_eligible_revenue_USD: {eligible_revenue_usd}
+bsn_revenue_l6_split: {bsn_revenue_l6_split}
+l6_name_category: {l6_name_category}
 
+Return only this JSON format:
+
+{{
+  "decision": "include" | "exclude" | "borderline_review",
+  "reasoning": "<detailed expert reasoning combining inference and data>",
+  "key_segments": [
+    {{
+      "segment": "<business segment>",
+      "l6_names": ["<l6_name_1>", "<l6_name_2>"],
+      "why_it_matters": "<explain its relevance to {theme}>"
+    }}
+  ],
+  "concerns_or_flags": ["<optional flags>"]
+}}
+""".strip()
+
+    else:
+        prompt = f"""
+You are an expert in thematic investing and corporate classification across global industries including infrastructure, engineered systems, industrials, energy, manufacturing, and advanced technologies.
+
+Your goal: Decide whether this company belongs to the global "{theme}" thematic universe.
+
+You will receive:
+- Structured L6-based revenue data
+- A narrative business description
+
+You are allowed (and expected) to use:
+- Real-world domain knowledge
+- Inference about how products/services relate to {theme}
+- Understanding of typical industrial applications
+- Reasoning to interpret ambiguous segments
+
+Evaluate whether the company’s activities are:
+- Central to {theme}
+- Adjacent to {theme}
+- Not meaningfully related to {theme}
+
+You must choose:
+- "include"
+- "exclude"
+- "borderline_review"
+
+Company data:
+
+isin: {isin}
+entity_proper_name: {entity_proper_name}
+{theme_lower}_core_pct: {core_pct}
+{theme_lower}_eligible_pct: {eligible_pct}
+{theme_lower}_eligible_revenue_USD: {eligible_revenue_usd}
+bsn_revenue_l6_split: {bsn_revenue_l6_split}
+l6_name_category: {l6_name_category}
+description_ref_text: {description_ref_text}
+
+Return only this JSON:
+
+{{
+  "decision": "include" | "exclude" | "borderline_review",
+  "reasoning": "<expert reasoning combining structured data, description insights, and inference>",
+  "description_insights": {{
+    "theme_signals": "<key signals from description relevant to {theme}>",
+    "non_theme_signals": "<signals unrelated to {theme}>",
+    "consistency_check": "<does description reinforce or contradict L6 data>"
+  }},
+  "key_segments": [
+    {{
+      "segment": "<business segment>",
+      "l6_names": ["<l6_name_1>", "<l6_name_2>"],
+      "why_it_matters": "<inferred relevance to {theme}>"
+    }}
+  ],
+  "concerns_or_flags": ["<optional flags>"]
+}}
+""".strip()
+
+    return prompt
