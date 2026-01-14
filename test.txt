@@ -1,107 +1,163 @@
-Perfect — here’s the revised and fully tailored version of your feedback requests with those clarifications included.
-Each message is written in a tone that’s professional, concise, and context-aware, suitable for email or internal feedback tools (like Workday, Outlook, or Viva).
-
-
----
-
-1. Ankur (Manager – Direct Reporting Manager)
-
-Subject: Request for Annual Performance Feedback
-Message:
-Hi Ankur,
-As part of my annual performance review, I’d like to request your feedback on my overall contributions this year. I’d especially value your inputs on my project delivery, collaboration within the MLOps working group, and transition into a managerial role through intern management and onboarding of new members.
-Your guidance has been instrumental, and your perspective will help me identify areas to strengthen further in the coming year.
-Thanks for your time and support,
-Nadeeha
-
-
----
-
-2. Aman (Thematic Portfolio Collaborator & Co-Manager for Interns)
-
-Subject: Request for Performance Feedback
-Message:
-Hi Aman,
-I’m reaching out for your feedback as part of my annual review process. We’ve worked closely on the Thematic Portfolio projects and during the intern management phase, where you managed one intern and I managed another. I’d really appreciate your thoughts on my collaboration, problem-solving, and leadership in those contexts—particularly how effectively I contributed to the joint project outcomes and supported cross-team coordination.
-Thanks so much for sharing your inputs,
-Nadeeha
-
-
----
-
-3. Amit (Data Science Group Lead & Senior Manager)
-
-Subject: Request for Performance Feedback
-Message:
-Hi Amit,
-As part of my annual performance feedback, I’d appreciate your perspective on my contributions across the year. I’ve had the opportunity to collaborate with you on the Thematic Portfolio work, participate in the MLOps working group under your guidance, and lead intern management and mentoring activities.
-Your feedback on my technical depth, teamwork, and leadership development would be extremely valuable as I continue to grow within the team.
-Thanks for your time and guidance,
-Nadeeha
-
-
----
-
-4. Subham (Managerial Observer & MLOps Working Group Member)
-
-Subject: Request for Feedback
-Message:
-Hi Subham,
-I’m collecting feedback for my annual performance review and would appreciate your thoughts. You’ve seen my work both during the intern management period and within the MLOps working group, so your perspective on my collaboration, initiative, and technical leadership would mean a lot.
-Thanks in advance for taking the time to share your feedback,
-Nadeeha
-
-
----
-
-5. Bhargav (Managerial Observer & MLOps Working Group Member)
-
-Subject: Request for Feedback
-Message:
-Hi Bhargav,
-As part of my annual performance process, I wanted to request your feedback based on your observations of my work across intern management and the MLOps working group. I’d really value your thoughts on my collaboration, communication, and contribution to team outcomes.
-Appreciate your time and inputs,
-Nadeeha
-
-
----
-
-6. Suprit, Vinay, and Sarabjit (Core MLOps Working Group Members)
-
-Subject: Request for Feedback – MLOps Working Group
-Message:
-Hi [Suprit/Vinay/Sarabjit],
-As part of my annual feedback process, I’d like to request your inputs based on our collaboration within the MLOps working group. I’d really value your views on how I contribute to our initiatives—be it through technical discussions, coordination, or driving execution—and any suggestions on where I can improve further.
-Thanks for your time and honest feedback,
-Nadeeha
-
-
----
-
-7. Dhillip (Direct Report – Current)
-
-Subject: Request for Feedback
-Message:
-Hi Dhillip,
-As part of my performance review, I’d like to gather feedback from my direct reports as well. I’d appreciate your candid input on my mentoring and management style—what’s working well and where I can support you better.
-Your perspective helps me improve as a manager and create a more supportive environment for you.
-Thanks,
-Nadeeha
-
-
----
-
-8. Nandana (Former Intern – Now Converted)
-
-Subject: Request for Feedback
-Message:
-Hi Nandana,
-I’m collecting feedback for my annual review and would love your input. Since we worked closely during your internship, I’d value your thoughts on my mentorship approach, the guidance I provided through your project, and how effectively I supported your transition into a full-time role.
-Thanks for your honest feedback—it really helps me continue improving as a mentor.
-Nadeeha
-
-
----
-
-Would you like me to now make a short Slack-friendly version (2–3 lines each) that you can directly paste into chats or the HSBC feedback portal?
-These are often requested in parallel, and I can match the tone to your internal style (e.g., friendly but polished).
+Slide 1 — Use Case Framing & MLOps Maturity Target
+Why this use case exists and what it demonstrates
+Context
+Implemented as part of the MLOps Working Group as a reference production use case
+Focused on demonstrating end-to-end MLOps practices, not just model performance
+Use case: semantic taxonomy classification using embeddings
+Why this use case
+Common enterprise problem (taxonomy mapping across ESG, products, research)
+Embedding-based inference → ideal for demonstrating inference MLOps
+Stateless, repeatable, and production-friendly
+MLOps Objective
+Move from:
+Ad-hoc scripts and notebooks (Level 0)
+To a repeatable, deployable ML service (Level 1)
+Establish a baseline that can evolve toward Level 2
+Google MLOps Alignment
+Primary target: Level 1 (ML pipeline automation – inference)
+Select elements approaching Level 2 (CI/CD, reliability patterns)
+Key message:
+This project is designed to demonstrate incremental MLOps maturity, not over-engineering.
+Slide 2 — ML System Design & Reproducibility Foundations
+Core requirement for Level 1 MLOps
+ML System Decomposition
+Clear separation of concerns:
+Input ingestion (CSV / JSON / YAML)
+Embedding generation
+Similarity computation
+Ranking & output generation
+Reproducibility Practices
+Version-controlled codebase
+Pinned Python dependencies
+Isolated Python virtual environment
+Deterministic local inference option
+Model Abstraction
+Embedding models are:
+Configurable
+Replaceable
+Not hard-coded into application logic
+Google MLOps Mapping
+❌ Level 0: Manual, non-reproducible scripts
+✅ Level 1: Reproducible ML systems
+⚠️ Level 2: No automated promotion workflows yet
+MLOps principle:
+Reproducibility is the first non-negotiable step toward production ML.
+Slide 3 — Model Lifecycle & Inference Automation
+Operational ML without training pipelines
+Embedding Lifecycle
+Local Embeddings
+CPU-based sentence transformers
+Cost-efficient, deterministic
+Ideal for development, demos, and controlled environments
+Cloud Embeddings (Vertex AI)
+Managed, scalable, versioned
+Enterprise-grade inference
+Secure access via service accounts
+Inference Automation
+Batch embedding generation
+Runtime model selection
+Automatic fallback between models
+Stateless execution (no persisted state)
+Evaluation Strategy
+7 similarity metrics:
+Cosine, Euclidean, Manhattan
+Dot Product, Minkowski, Chebyshev
+Jaccard similarity
+Enables robustness, explainability, and metric comparison
+Google MLOps Mapping
+❌ Level 0: Manual inference logic
+✅ Level 1: Automated inference pipeline
+⚠️ Level 2: No automated retraining triggers (not applicable here)
+Key insight:
+MLOps applies equally to inference-only systems, not just training pipelines.
+Slide 4 — Deployment, Reliability & Operations
+Production readiness with pragmatic MLOps
+Current Deployment
+Deployed on Google Cloud Compute Engine
+Python 3.11 + Streamlit application
+Managed as a systemd service
+Always-on VM → no cold starts
+Reliability Practices
+Auto-restart on failure
+Service health managed at OS level
+Predictable runtime behavior
+Observability
+Application-level logs
+System-level logs (journalctl)
+Manual operational controls:
+Restart service
+Check status
+Tail logs
+Intentional Design Choice
+No Docker / Kubernetes
+Architecture chosen to:
+Minimize operational overhead
+Match predictable workload profile
+Google MLOps Mapping
+❌ Level 0: Ad-hoc execution
+✅ Level 1: Stable, repeatable deployment
+⚠️ Level 2: Partial observability (no metrics dashboards yet)
+Maturity signal:
+Strong MLOps outcomes can be achieved without complex orchestration.
+Slide 5 — Security, Governance, Cost & Access
+Often overlooked, but critical for enterprise MLOps
+Security
+Service-account–based access to Vertex AI
+Least-privilege IAM
+Firewall-controlled SSH access
+No hard-coded credentials
+Governance
+Deployed in MapleQuad GCP project
+Region-aligned with org policies
+Stateless processing (no data persistence)
+Cost Control
+Predictable infrastructure cost (< $10/month)
+Optional cloud inference usage
+Clear cost vs scalability trade-offs
+Access & Transparency
+Public demo access:
+Application URL (for functional testing)
+Engineering access:
+SSH via gcloud CLI to inspect code, logs, and service
+Enables:
+Peer review
+Knowledge sharing
+Hands-on learning within WG
+MLOps principle:
+A production ML system must be secure, auditable, and operable, not just accurate.
+Slide 6 — MLOps Maturity Assessment, Roadmap & Experiments
+Where we are today and what comes next
+Current Maturity Assessment (Google MLOps)
+Area
+Status
+Reproducibility
+✅ Level 1
+Inference Automation
+✅ Level 1
+Deployment Reliability
+✅ Level 1
+Security & IAM
+✅ Level 1
+Monitoring & Metrics
+⚠️ Partial
+CI/CD
+❌ Not yet
+Governance Automation
+⚠️ Basic
+Overall Classification
+Solid Level 1 MLOps implementation
+Strong foundation for Level 2 evolution
+Near-Term Roadmap
+Deploy and validate within MapleQuad GCP project
+Run controlled testing before wider internal exposure
+Collect usage and operational feedback
+Future MLOps Experiments
+Cloud Run deployment
+Compare VM-based always-on vs serverless
+Evaluate cold starts, cost, and scaling
+CI/CD pipelines
+Metrics & latency dashboards
+Automated validation checks
+Optional containerization when scale demands it
+Final Takeaway
+This use case establishes a pragmatic, reviewable, and reusable Level 1 MLOps baseline, with a clear and intentional path toward Level 2.
