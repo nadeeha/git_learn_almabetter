@@ -1,62 +1,88 @@
-Application Capabilities & Inference Automation
-Operational ML features without training pipelines
-Core Application Capability
-Semantic Taxonomy Matching as a Service
-The application exposes semantic similarity as a reusable ML capability
-Designed to work across:
-Different taxonomies
-Different domains
-Different embedding backends
-Focuses on inference reliability and flexibility, not model training
-Embedding Lifecycle (Pluggable App Feature)
-Local Embedding Mode
-CPU-based sentence transformer models
-Zero external dependencies
-Deterministic outputs for repeatability
-Ideal for:
-Development & demos
-Cost-sensitive environments
-Offline or restricted networks
-Cloud Embedding Mode (Vertex AI)
-Managed text embedding models
-Scalable and enterprise-ready
-Versioned models without code changes
-Secure access using service accounts (no API keys in code)
-App-Level Feature
-Embedding backend is configurable, not hard-coded
-Enables switching models without redeploying the app
-Inference Automation & Runtime Behavior
-Automated Inference Flow
-Input text + taxonomy ingested at runtime
-Embeddings generated in batches for efficiency
-Similarity computed across hierarchy levels
-Results ranked and returned in a single request
-Resilience & Reliability
-Runtime model selection
-Automatic fallback between embedding backends
-Graceful handling of API or model failures
-Stateless Execution
-No data persistence between requests
-No dependency on historical state
-Safe for repeated, concurrent usage
-Similarity & Ranking Engine (Key App Feature)
-Multi-Metric Evaluation
-Supports 7 similarity metrics:
+Yes — this is actually better as a flow, especially for MLOps and app reviewers.
+Below is a clean, left-to-right application flow that you can put directly on the slide, with MLOps intent embedded at each step.
+You can title the slide exactly like this and paste the flow as content.
+Slide 3 — Application Inference Flow (MLOps-Aligned)
+How the app works end-to-end in production
+1️⃣ User Input & Configuration
+User provides:
+Free-text description
+Taxonomy file (CSV / JSON / YAML)
+User selects:
+Embedding mode (Local or Vertex AI)
+Similarity metric(s)
+No assumptions baked into code — runtime configurability
+MLOps principle:
+✔ Config-driven behavior (not hard-coded logic)
+2️⃣ Taxonomy Parsing & Validation
+Application parses taxonomy structure
+Supports:
+Flat hierarchies
+Multi-level nested hierarchies
+Normalizes text across hierarchy levels
+MLOps principle:
+✔ Deterministic preprocessing
+✔ Reproducible inference inputs
+3️⃣ Embedding Generation (Pluggable Backend)
+Decision Point
+If Local Mode:
+CPU-based sentence transformers
+Deterministic, cost-efficient
+If Cloud Mode:
+Vertex AI text embeddings
+Managed, scalable, versioned
+Secure access via service accounts
+Runtime behavior
+Batch embedding generation
+Backend selected dynamically
+Automatic fallback on failure
+MLOps principle:
+✔ Model abstraction
+✔ Resilience without redeployments
+4️⃣ Similarity Computation & Ranking
+Application computes similarity using multiple metrics:
 Cosine, Euclidean, Manhattan
 Dot Product, Minkowski, Chebyshev
 Jaccard similarity
-Metrics computed side-by-side for comparison
+Metrics run in parallel
+Results ranked per metric
 Why this matters
-Avoids over-reliance on a single metric
-Enables explainable ranking decisions
-Allows users to choose the most appropriate similarity signal
-App-Level Output
-Ranked taxonomy matches
-Metric-level transparency
-Exportable results for downstream analysis
-Google MLOps Maturity Mapping
-❌ Level 0: Manual, ad-hoc inference logic
-✅ Level 1: Automated, repeatable inference pipeline embedded in an application
-⚠️ Level 2: No retraining or feedback-triggered automation (not required for this use case)
-Key Insight
-This application demonstrates that MLOps maturity is not limited to training pipelines — production-grade inference systems require the same rigor in automation, reliability, and design.
+Avoids single-metric bias
+Enables explainability
+Supports metric comparison
+MLOps principle:
+✔ Transparent evaluation
+✔ Explainable inference logic
+5️⃣ Result Assembly & UI Output
+Ranked matches displayed in UI
+Each hierarchy level shown explicitly
+Metric scores exposed (not hidden)
+Results downloadable for offline analysis
+MLOps principle:
+✔ Traceable outputs
+✔ Human-interpretable inference
+6️⃣ Stateless Execution & Operational Guarantees
+No data persisted between requests
+Each request processed independently
+Safe for repeated and concurrent usage
+Always-on service managed via systemd
+MLOps principle:
+✔ Stateless inference
+✔ Production-safe execution model
+7️⃣ MLOps Maturity Mapping (Inline)
+❌ Level 0: Manual inference logic
+✅ Level 1: Automated, repeatable inference flow embedded in an application
+⚠️ Level 2: No retraining or feedback loops (not required for this use case)
+Key Takeaway (Flow-Based)
+The application implements a fully automated inference flow — from user input to ranked, explainable outputs — demonstrating Level-1 MLOps maturity without requiring training pipelines.
+Why this works extremely well
+Reads like how the app actually runs
+Easy to narrate in < 2 minutes
+Naturally explains why training is absent
+Shows MLOps thinking inside application design
+If you want next, I can:
+Convert this into a 1-slide diagram layout
+Add icons per step (input → model → output)
+Create a speaker narration script
+Align this visually with Google MLOps Level markers
+This flow version is exactly what reviewers expect when they ask
+“Okay, but how does it actually work?”
