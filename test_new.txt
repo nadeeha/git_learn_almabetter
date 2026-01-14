@@ -1,0 +1,62 @@
+Application Capabilities & Inference Automation
+Operational ML features without training pipelines
+Core Application Capability
+Semantic Taxonomy Matching as a Service
+The application exposes semantic similarity as a reusable ML capability
+Designed to work across:
+Different taxonomies
+Different domains
+Different embedding backends
+Focuses on inference reliability and flexibility, not model training
+Embedding Lifecycle (Pluggable App Feature)
+Local Embedding Mode
+CPU-based sentence transformer models
+Zero external dependencies
+Deterministic outputs for repeatability
+Ideal for:
+Development & demos
+Cost-sensitive environments
+Offline or restricted networks
+Cloud Embedding Mode (Vertex AI)
+Managed text embedding models
+Scalable and enterprise-ready
+Versioned models without code changes
+Secure access using service accounts (no API keys in code)
+App-Level Feature
+Embedding backend is configurable, not hard-coded
+Enables switching models without redeploying the app
+Inference Automation & Runtime Behavior
+Automated Inference Flow
+Input text + taxonomy ingested at runtime
+Embeddings generated in batches for efficiency
+Similarity computed across hierarchy levels
+Results ranked and returned in a single request
+Resilience & Reliability
+Runtime model selection
+Automatic fallback between embedding backends
+Graceful handling of API or model failures
+Stateless Execution
+No data persistence between requests
+No dependency on historical state
+Safe for repeated, concurrent usage
+Similarity & Ranking Engine (Key App Feature)
+Multi-Metric Evaluation
+Supports 7 similarity metrics:
+Cosine, Euclidean, Manhattan
+Dot Product, Minkowski, Chebyshev
+Jaccard similarity
+Metrics computed side-by-side for comparison
+Why this matters
+Avoids over-reliance on a single metric
+Enables explainable ranking decisions
+Allows users to choose the most appropriate similarity signal
+App-Level Output
+Ranked taxonomy matches
+Metric-level transparency
+Exportable results for downstream analysis
+Google MLOps Maturity Mapping
+❌ Level 0: Manual, ad-hoc inference logic
+✅ Level 1: Automated, repeatable inference pipeline embedded in an application
+⚠️ Level 2: No retraining or feedback-triggered automation (not required for this use case)
+Key Insight
+This application demonstrates that MLOps maturity is not limited to training pipelines — production-grade inference systems require the same rigor in automation, reliability, and design.
