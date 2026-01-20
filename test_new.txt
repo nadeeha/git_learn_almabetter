@@ -1,22 +1,69 @@
-Yes — this is actually better as a flow, especially for MLOps and app reviewers.
-Below is a clean, left-to-right application flow that you can put directly on the slide, with MLOps intent embedded at each step.
-You can title the slide exactly like this and paste the flow as content.
-Slide 3 — Application Inference Flow (MLOps-Aligned)
-How the app works end-to-end in production
-1️⃣ User Input & Configuration
-User provides:
-Free-text description
-Taxonomy file (CSV / JSON / YAML)
-User selects:
-Embedding mode (Local or Vertex AI)
-Similarity metric(s)
-No assumptions baked into code — runtime configurability
-MLOps principle:
-✔ Config-driven behavior (not hard-coded logic)
-2️⃣ Taxonomy Parsing & Validation
-Application parses taxonomy structure
-Supports:
-Flat hierarchies
+Perfect — this is exactly the right moment to lock a high-quality, low-redo “system-style” prompt for your internal tool.
+Below is a clean, institutional-grade master prompt designed specifically for:
+Annual reports
+Primary impact assessment
+Social Opportunities Fund
+Analyst / PM consumption
+Single-document, single-session constraint
+You can paste this as the very first prompt after uploading each report, then append your 8 questions at the end.
+🔹 MASTER PROMPT — PRIMARY SOCIAL IMPACT ASSESSMENT
+(Copy–paste and reuse across all reports)
+You are acting as an Impact Analyst supporting a Social Opportunities Fund.
+The uploaded document is a single company annual report.
+Your task is to perform a primary social impact assessment strictly based on information disclosed in this report.
+Scope & Data Rules
+Use only the uploaded annual report.
+Do not infer, estimate, benchmark, or assume information that is not explicitly disclosed.
+If data is missing, unclear, or qualitative only, clearly state “Not disclosed in the annual report.”
+Do not use external knowledge, peer comparisons, or prior-year assumptions unless explicitly stated in the report.
+Analytical Lens (VERY IMPORTANT)
+Assess the company through a Social Opportunities Fund lens, focusing on:
+Access to essential products or services
+Positive social outcomes for underserved or vulnerable populations
+Employee wellbeing, safety, inclusion, and fair treatment
+Human capital development and workforce resilience
+Responsible customer practices and product impact
+This is a primary assessment, not a final scoring or investment recommendation.
+Answering Instructions
+For each question:
+Answer only that question (do not combine responses)
+Reference page numbers and/or section titles wherever possible
+Prioritize quantitative disclosures; supplement with qualitative detail if relevant
+Keep responses concise, factual, and analyst-ready
+If multiple disclosures relate to the same topic, summarize them clearly
+Output Format (MANDATORY)
+For each question, use the following structure:
+Answer:
+Clear, direct response to the question
+Evidence from the Annual Report:
+Bullet points with page number(s) and/or section name(s)
+Disclosure Gaps (if any):
+Explicitly state missing, partial, or unclear information
+Do not add opinions, conclusions, or scores unless explicitly asked.
+Answer the following questions based only on the uploaded annual report:
+🔹 After this, paste your 8 questions like this
+Copy code
+
+1. [Question 1]
+2. [Question 2]
+3. [Question 3]
+...
+8. [Question 8]
+Why this prompt works well in internal tools
+✅ Prevents hallucinations
+✅ Forces page-level traceability (PM-friendly)
+✅ Handles missing data cleanly (very important for impact)
+✅ Consistent outputs across all companies
+✅ Minimizes need to restart sessions
+Optional (only if allowed by your tool)
+If your internal tool supports tables, add this line before the questions:
+If information is best presented in a table (e.g., workforce breakdowns, safety metrics), use a simple table and cite pages.
+If you want, next I can:
+Refine this for your exact 8 questions (even tighter)
+Convert it into a one-click reusable template
+Add a “PM summary paragraph” version without increasing reruns
+Stress-test it against a sample annual report question
+Just tell me 👍Flat hierarchies
 Multi-level nested hierarchies
 Normalizes text across hierarchy levels
 MLOps principle:
