@@ -1,135 +1,52 @@
-Perfect — this is exactly the right moment to lock a high-quality, low-redo “system-style” prompt for your internal tool.
-Below is a clean, institutional-grade master prompt designed specifically for:
-Annual reports
-Primary impact assessment
-Social Opportunities Fund
-Analyst / PM consumption
-Single-document, single-session constraint
-You can paste this as the very first prompt after uploading each report, then append your 8 questions at the end.
-🔹 MASTER PROMPT — PRIMARY SOCIAL IMPACT ASSESSMENT
-(Copy–paste and reuse across all reports)
-You are acting as an Impact Analyst supporting a Social Opportunities Fund.
-The uploaded document is a single company annual report.
-Your task is to perform a primary social impact assessment strictly based on information disclosed in this report.
-Scope & Data Rules
-Use only the uploaded annual report.
-Do not infer, estimate, benchmark, or assume information that is not explicitly disclosed.
-If data is missing, unclear, or qualitative only, clearly state “Not disclosed in the annual report.”
-Do not use external knowledge, peer comparisons, or prior-year assumptions unless explicitly stated in the report.
-Analytical Lens (VERY IMPORTANT)
-Assess the company through a Social Opportunities Fund lens, focusing on:
-Access to essential products or services
-Positive social outcomes for underserved or vulnerable populations
-Employee wellbeing, safety, inclusion, and fair treatment
-Human capital development and workforce resilience
-Responsible customer practices and product impact
-This is a primary assessment, not a final scoring or investment recommendation.
-Answering Instructions
-For each question:
-Answer only that question (do not combine responses)
-Reference page numbers and/or section titles wherever possible
-Prioritize quantitative disclosures; supplement with qualitative detail if relevant
-Keep responses concise, factual, and analyst-ready
-If multiple disclosures relate to the same topic, summarize them clearly
-Output Format (MANDATORY)
-For each question, use the following structure:
-Answer:
-Clear, direct response to the question
-Evidence from the Annual Report:
-Bullet points with page number(s) and/or section name(s)
-Disclosure Gaps (if any):
-Explicitly state missing, partial, or unclear information
-Do not add opinions, conclusions, or scores unless explicitly asked.
-Answer the following questions based only on the uploaded annual report:
-🔹 After this, paste your 8 questions like this
-Copy code
+def evaluate_theme_ai(pro_pct_AI, has_sub_themes_AI, pro_confidence_AI, is_first_column_AI, validity_label_AI):
+    """
+    Evaluates the theme classification using your specific dataset columns.
+    
+    Args:
+        pro_pct_AI (float): The numeric score (0.0 to 1.0).
+        has_sub_themes_AI (int): 1 if subthemes exist, 0 if empty.
+        pro_confidence_AI (str): Judge confidence (e.g., 'High').
+        is_first_column_AI (int/bool): 1 (True) if first theme, 0 (False) otherwise.
+        validity_label_AI (str): Combined label (e.g., 'Valid-High', 'Invalid-Medium').
+    """
+    
+    # --- Logic Block 1: Initial Check ---
+    # Condition: if score = 0 OR (subthemes is empty AND score = 1)
+    
+    if (pro_pct_AI == 0) or (has_sub_themes_AI == 0 and pro_pct_AI == 1):
+        if pro_confidence_AI == "High":
+            return "EUC-MC REVIEW", pro_pct_AI
+        else:
+            return "UNRELATED", 0
 
-1. [Question 1]
-2. [Question 2]
-3. [Question 3]
-...
-8. [Question 8]
-Why this prompt works well in internal tools
-✅ Prevents hallucinations
-✅ Forces page-level traceability (PM-friendly)
-✅ Handles missing data cleanly (very important for impact)
-✅ Consistent outputs across all companies
-✅ Minimizes need to restart sessions
-Optional (only if allowed by your tool)
-If your internal tool supports tables, add this line before the questions:
-If information is best presented in a table (e.g., workforce breakdowns, safety metrics), use a simple table and cite pages.
-If you want, next I can:
-Refine this for your exact 8 questions (even tighter)
-Convert it into a one-click reusable template
-Add a “PM summary paragraph” version without increasing reruns
-Stress-test it against a sample annual report question
-Just tell me 👍Flat hierarchies
-Multi-level nested hierarchies
-Normalizes text across hierarchy levels
-MLOps principle:
-✔ Deterministic preprocessing
-✔ Reproducible inference inputs
-3️⃣ Embedding Generation (Pluggable Backend)
-Decision Point
-If Local Mode:
-CPU-based sentence transformers
-Deterministic, cost-efficient
-If Cloud Mode:
-Vertex AI text embeddings
-Managed, scalable, versioned
-Secure access via service accounts
-Runtime behavior
-Batch embedding generation
-Backend selected dynamically
-Automatic fallback on failure
-MLOps principle:
-✔ Model abstraction
-✔ Resilience without redeployments
-4️⃣ Similarity Computation & Ranking
-Application computes similarity using multiple metrics:
-Cosine, Euclidean, Manhattan
-Dot Product, Minkowski, Chebyshev
-Jaccard similarity
-Metrics run in parallel
-Results ranked per metric
-Why this matters
-Avoids single-metric bias
-Enables explainability
-Supports metric comparison
-MLOps principle:
-✔ Transparent evaluation
-✔ Explainable inference logic
-5️⃣ Result Assembly & UI Output
-Ranked matches displayed in UI
-Each hierarchy level shown explicitly
-Metric scores exposed (not hidden)
-Results downloadable for offline analysis
-MLOps principle:
-✔ Traceable outputs
-✔ Human-interpretable inference
-6️⃣ Stateless Execution & Operational Guarantees
-No data persisted between requests
-Each request processed independently
-Safe for repeated and concurrent usage
-Always-on service managed via systemd
-MLOps principle:
-✔ Stateless inference
-✔ Production-safe execution model
-7️⃣ MLOps Maturity Mapping (Inline)
-❌ Level 0: Manual inference logic
-✅ Level 1: Automated, repeatable inference flow embedded in an application
-⚠️ Level 2: No retraining or feedback loops (not required for this use case)
-Key Takeaway (Flow-Based)
-The application implements a fully automated inference flow — from user input to ranked, explainable outputs — demonstrating Level-1 MLOps maturity without requiring training pipelines.
-Why this works extremely well
-Reads like how the app actually runs
-Easy to narrate in < 2 minutes
-Naturally explains why training is absent
-Shows MLOps thinking inside application design
-If you want next, I can:
-Convert this into a 1-slide diagram layout
-Add icons per step (input → model → output)
-Create a speaker narration script
-Align this visually with Google MLOps Level markers
-This flow version is exactly what reviewers expect when they ask
-“Okay, but how does it actually work?”
+    # --- Logic Block 2: If it IS the First Theme ---
+    elif is_first_column_AI:
+        if validity_label_AI == "Valid-High" and pro_pct_AI > 0.5:
+            return "CORE", pro_pct_AI
+        elif validity_label_AI == "Valid-High" and pro_pct_AI <= 0.5:
+            return "EUC-HC", pro_pct_AI
+        elif validity_label_AI == "Invalid-High" or validity_label_AI == "Valid-Medium":
+            return "EUC-MC", pro_pct_AI
+        else:
+            return "NA", pro_pct_AI
+
+    # --- Logic Block 3: If it is NOT the First Theme (and score != 0) ---
+    elif (not is_first_column_AI) and (pro_pct_AI != 0):
+        if validity_label_AI == "Valid-High":
+            return "EUC-HC", pro_pct_AI
+        elif validity_label_AI == "Valid-Medium":
+            return "EUC-MC", pro_pct_AI
+        elif validity_label_AI == "Valid-Low":
+            return "UNRELATED", pro_pct_AI
+            
+        # Checking combined Invalid labels
+        elif validity_label_AI == "Invalid-Medium":
+            return "EUC-MC", pro_pct_AI
+        elif validity_label_AI == "Invalid-Low":
+            return "LOOSELY", pro_pct_AI
+        else:
+            return "NA", pro_pct_AI
+
+    # --- Logic Block 4: Fallback ---
+    else:
+        return "UNRELATED (REJECT REVIEW)", 0
