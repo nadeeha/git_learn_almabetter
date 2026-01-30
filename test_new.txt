@@ -1,52 +1,98 @@
-def evaluate_theme_ai(pro_pct_AI, has_sub_themes_AI, pro_confidence_AI, is_first_column_AI, validity_label_AI):
+import os
+import numpy as np
+import pandas as pd
+from google import genai
+from google.genai.types import EmbedContentConfig
+
+# -----------------------------
+# CONFIG
+# -----------------------------
+PROJECT_ID = os.environ["GOOGLE_CLOUD_PROJECT"]
+LOCATION = os.environ.get("GOOGLE_CLOUD_LOCATION", "us-central1")
+
+EMBED_MODEL = "text-embedding-005"   # supported on Vertex AI 2
+BATCH_TEXTS = 200                    # <= 250 texts/request 3
+
+# -----------------------------
+# DEFENSE ANCHORS (short, non-diluted)
+# -----------------------------
+DEFENSE_ANCHORS = [
+    "Defense and military technologies, systems, services, and hardware for national security and defense applications.",
+    "Weapons and munitions: missiles, ammunition, hypersonic weapons, directed energy weapons.",
+    "Aerospace defense: military aircraft, drones, UAVs, unmanned aerial vehicles, space launch vehicles.",
+    "Land systems: armored vehicles, military ground vehicles, unmanned or autonomous ground vehicles.",
+    "Naval systems: military ships, submarines, unmanned surface/underwater vehicles.",
+    "Defense electronics: radar, avionics, sensors, processors, secure networking equipment.",
+    "Missile defense: detecting, tracking, intercepting ballistic missiles; air defense.",
+    "ISR: surveillance, reconnaissance, intelligence gathering using sensors and platforms.",
+    "Command & control: C4/C5/C6ISR, secure communications, battle management.",
+    "Defense cybersecurity: protecting military networks and critical defense infrastructure.",
+    "Defense tech: AI, IoT, robotics, advanced analytics for defense applications.",
+    "Government IT services, public sector software, technical training and simulation for defense."
+]
+
+# -----------------------------
+# UTILS
+# -----------------------------
+def make_client() -> genai.Client:
+    # Vertex AI usage
+    return genai.Client(vertexai=True, project=PROJECT_ID, location=LOCATION)
+
+def l2_normalize(x: np.ndarray) -> np.ndarray:
+    return x / (np.linalg.norm(x, axis=1, keepdims=True) + 1e-12)
+
+def embed_texts(client: genai.Client, texts: list[str], task_type: str = "RETRIEVAL_DOCUMENT") -> np.ndarray:
     """
-    Evaluates the theme classification using your specific dataset columns.
-    
-    Args:
-        pro_pct_AI (float): The numeric score (0.0 to 1.0).
-        has_sub_themes_AI (int): 1 if subthemes exist, 0 if empty.
-        pro_confidence_AI (str): Judge confidence (e.g., 'High').
-        is_first_column_AI (int/bool): 1 (True) if first theme, 0 (False) otherwise.
-        validity_label_AI (str): Combined label (e.g., 'Valid-High', 'Invalid-Medium').
+    Embeds a list of texts using Vertex AI embeddings API.
+    Respects per-request limit of 250 texts. 4
     """
-    
-    # --- Logic Block 1: Initial Check ---
-    # Condition: if score = 0 OR (subthemes is empty AND score = 1)
-    
-    if (pro_pct_AI == 0) or (has_sub_themes_AI == 0 and pro_pct_AI == 1):
-        if pro_confidence_AI == "High":
-            return "EUC-MC REVIEW", pro_pct_AI
-        else:
-            return "UNRELATED", 0
+    vecs = []
+    for i in range(0, len(texts), BATCH_TEXTS):
+        batch = texts[i:i+BATCH_TEXTS]
+        resp = client.models.embed_content(
+            model=EMBED_MODEL,
+            contents=batch,
+            config=EmbedContentConfig(task_type=task_type),
+        )
+        batch_vecs = [np.array(e.values, dtype=np.float32) for e in resp.embeddings]
+        vecs.append(np.vstack(batch_vecs))
+    return np.vstack(vecs)
 
-    # --- Logic Block 2: If it IS the First Theme ---
-    elif is_first_column_AI:
-        if validity_label_AI == "Valid-High" and pro_pct_AI > 0.5:
-            return "CORE", pro_pct_AI
-        elif validity_label_AI == "Valid-High" and pro_pct_AI <= 0.5:
-            return "EUC-HC", pro_pct_AI
-        elif validity_label_AI == "Invalid-High" or validity_label_AI == "Valid-Medium":
-            return "EUC-MC", pro_pct_AI
-        else:
-            return "NA", pro_pct_AI
+def embedding_defense_scores(df: pd.DataFrame, text_col: str = "segment_name") -> pd.DataFrame:
+    """
+    Returns a result df with:
+      row_id, segment_name, emb_score, best_anchor_idx
+    Merge-safe by row_id.
+    """
+    out = df.copy()
 
-    # --- Logic Block 3: If it is NOT the First Theme (and score != 0) ---
-    elif (not is_first_column_AI) and (pro_pct_AI != 0):
-        if validity_label_AI == "Valid-High":
-            return "EUC-HC", pro_pct_AI
-        elif validity_label_AI == "Valid-Medium":
-            return "EUC-MC", pro_pct_AI
-        elif validity_label_AI == "Valid-Low":
-            return "UNRELATED", pro_pct_AI
-            
-        # Checking combined Invalid labels
-        elif validity_label_AI == "Invalid-Medium":
-            return "EUC-MC", pro_pct_AI
-        elif validity_label_AI == "Invalid-Low":
-            return "LOOSELY", pro_pct_AI
-        else:
-            return "NA", pro_pct_AI
+    # Stable key for back-tagging
+    if "row_id" not in out.columns:
+        out["row_id"] = out.index.astype(str)
 
-    # --- Logic Block 4: Fallback ---
-    else:
-        return "UNRELATED (REJECT REVIEW)", 0
+    client = make_client()
+
+    # Embed anchors once
+    anchor_vecs = l2_normalize(embed_texts(client, DEFENSE_ANCHORS, task_type="RETRIEVAL_QUERY"))
+
+    # Embed all segment names
+    seg_texts = out[text_col].astype(str).tolist()
+    seg_vecs = l2_normalize(embed_texts(client, seg_texts, task_type="RETRIEVAL_DOCUMENT"))
+
+    # Cosine similarity since vectors are normalized 5
+    sims = seg_vecs @ anchor_vecs.T  # (n_segments, n_anchors)
+    best_idx = np.argmax(sims, axis=1)
+    best_sim = sims[np.arange(len(out)), best_idx]
+
+    out["emb_score"] = best_sim
+    out["best_anchor_idx"] = best_idx
+
+    return out[["row_id", text_col, "emb_score", "best_anchor_idx"]]
+
+# -----------------------------
+# EXAMPLE
+# -----------------------------
+if __name__ == "__main__":
+    df = pd.DataFrame({"segment_name": ["Missile guidance electronics", "Defensive investing strategy", "Naval unmanned vehicles"]})
+    scored = embedding_defense_scores(df)
+    print(scored)
