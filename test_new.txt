@@ -1,61 +1,31 @@
-Got it — here’s clean, slide-ready content you can directly paste into PowerPoint / Google Slides. I’ve structured it as 2 slides (Process + Outcomes), with a clear flow.
-I’ve kept it concise but analytically strong — suitable for SMEs / stakeholders.
-Slide 1 — Defence Theme Enhancement: Methodology & Validation Flow
-Objective
-Strengthen the Defence theme definition by systematically identifying missed defence-related categories and validating them using policy alignment, GenAI, and SME review.
-🔄 End-to-End Process
-1. Policy Review & Gap Identification
-Compared banned weapons and defence equipment coverage across:
-HSBC Asset Management Banned Policy Documents
-HSBC Defence Equipment Policy
-Identified defence-related concepts missing from the existing Defence theme definition.
-2. Keyword Expansion & Bucketing
-Created an exhaustive keyword list from policy documents.
-Bucketed keywords into domains such as:
-Anti-personnel mines
-Biological / chemical weapons
-Military hardware & systems
-Defence manufacturing & components
-Mining-linked defence inputs
-3. RBICS Hierarchy Search (L1–L6)
-Ran keyword matching across 2021 categories in the
-FactSet RBICS hierarchy
-Matched keywords against L1–L6 names + descriptions
-4. GenAI + Human Validation Layer
-140 keyword-matched rows surfaced
-Passed through:
-GenAI semantic validation
-Manual SME review
-Key finding:
-Most matches were false positives — keywords appeared at higher hierarchy levels or lacked true semantic alignment with Defence.
-✔ Multi-Stage Filtering
-Keyword match → GenAI semantic check → Human SME validation
-Only categories passing all three stages progressed.
-Slide 2 — Results & SME Review Ask
-📊 Outcomes Summary
-Stage
-Count
-Total RBICS categories scanned
-2021
-Keyword matches found
-140
-After GenAI + SME filtering
-10
-✅ Final Observations
-Majority of keyword hits did not materially improve Defence L6 coverage
-Final 10 additions primarily relate to:
-Mining-linked defence inputs
-One category covering Oil & Gas + Mining Additive Manufacturing
-These represent genuine semantic gaps in the original Defence theme.
-🧠 Next Step — SME Review Required
-👉 Request SMEs to review and confirm inclusion of these 10 proposed additions into the final Defence theme layer.
-Purpose:
-Ensure policy alignment
-Maintain semantic precision
-Avoid dilution of Defence exposure
-If you’d like, next I can also help you with:
-✅ a visual flow diagram version
-✅ a single-slide condensed executive summary
-✅ speaker notes (2–3 mins walkthrough)
-✅ a table of the 10 proposed additions template
-Just tell me 👍
+Got it — for an opening Zoom poll, simpler is usually better. You mainly want something intuitive that gets everyone participating and gently introduces the Defense theme without technical depth yet.
+Here’s a cleaner, more accessible Q2:
+✅ Opening Poll (Final)
+Q1. How familiar are you with thematic portfolio signal generation?
+Very familiar — I’ve worked with it directly
+Somewhat familiar — high-level understanding
+Slightly familiar — heard of it, not hands-on
+Not familiar at all
+Q2. Which of the following would YOU most associate with a “Defense” investment theme?
+Weapons & military hardware
+Aerospace & surveillance technologies
+Cybersecurity & digital defense
+All of the above
+👉 This warms them up conceptually and sets up your point that Defense is broader than just weapons — perfect lead-in to taxonomy + L6 discovery.
+✅ Closing Poll (Context-Based)
+Q3. In our Defense example, what is the PRIMARY role of the embedding layer?
+Directly scoring company revenues
+Matching similar L6s to expand the theme universe
+Final validation of eligible companies
+Portfolio weighting
+Q4. After GenAI Flash + Pro validation, why is SME review still required?
+To manually construct portfolios
+To refine taxonomy and include/exclude L6s based on domain expertise
+To calculate revenue percentages
+To replace GenAI outputs
+Q5. When building a Defense theme, what is the biggest real-world data challenge?
+Companies don’t clearly disclose Defense-specific revenues
+Business segments are labeled inconsistently
+Revenue exposure is often bundled across segments
+All of the above
+If you’d like, I can also give you a one-sentence transition from Q2 into your workflow (something like “Exactly — Defense spans much more than hardware, which is why we start with theme definition…”).
