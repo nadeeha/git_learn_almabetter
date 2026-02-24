@@ -156,4 +156,221 @@ How should it be delivered?
 
 
 ----------------
+COSTAR Prompt (Client Business Example – Final Prompt)
+Context:
+We are preparing a Q3 2025 client commentary for HSBC Asset Management’s Global Equity Fund. The fund underperformed its benchmark due to higher exposure to rate-sensitive sectors, an underweight to Energy, and US dollar strength impacting emerging market holdings.
+Objective:
+Create a client-ready performance commentary explaining Q3 results, key drivers, and current positioning.
+Style:
+Clear, concise, and professional. Avoid technical jargon.
+Tone:
+Neutral, transparent, and reassuring.
+Audience:
+Institutional and retail clients.
+Response Format:
+• Provide 3 bullet-point performance drivers
+• Follow with a short paragraph summarizing outlook and positioning
+• Keep total length under 200 words
+Focus specifically on sector allocation, interest rate impact, and regional contributors/detractors.
+Small closing line for the slide (optional):
+This is what “good prompting” looks like in real client workflows.
+
+
+--------------
+
+Prompt Engineering | Using COSTAR (DAO / Analytics Example)
+Let’s see COSTAR in action 🔍
+⚠️ Simple Prompt (Less Effective)
+Explain why the portfolio underperformed.
+⭐ COSTAR Prompt (More Effective – Final Prompt)
+Context:
+We are analyzing Q3 performance of HSBC Asset Management’s Multi-Asset Fund. The portfolio underperformed its benchmark. Available inputs include sector weights, regional exposure, interest rate movements, and asset allocation data.
+Objective:
+Identify and explain the main drivers of underperformance using portfolio and macro factors.
+Style:
+Analytical and structured.
+Tone:
+Professional and objective.
+Audience:
+Internal stakeholders (portfolio managers and data analytics teams).
+Response Format:
+List top 3 macro drivers
+Analyze asset allocation impact
+Highlight sector and regional contributors/detractors
+Provide a short executive summary (3–4 sentences)
+Use step-by-step reasoning and keep insights concise and data-focused.
+Optional footer line:
+Same data — clearer insights.
+Why this works for DAO
+They immediately see:
+✔ Stepwise analysis
+✔ Structured outputs
+✔ Macro → allocation → sector flow
+✔ Executive summary
+✔ Ready for dashboards / reports
+This aligns nicely with DAO workflows: performance attribution, analytics summaries, internal reporting.
+
+
+------------
+
+
+Perfect — we’ll keep the same visual structure and intent as your attached slides, but rewrite in plain business language, tuned to HSBC AM workflows (client commentary, DAO analysis, ESG summaries, dashboards).
+Below is ready-to-paste content for TWO slides:
+Prompt Engineering | Best Practices
+How to make an effective prompt
+✅ Clarity & Specificity
+Be explicit about what you want.
+Instead of:
+“Explain performance”
+Try:
+“Explain Q3 underperformance of the Global Equity Fund, focusing on sector allocation and rate sensitivity.”
+👉 Clear goals = usable outputs.
+🔍 Avoid Open-Ended Prompts
+Broad prompts invite generic answers (or hallucinations).
+Always narrow by:
+• Fund / region / timeframe
+• Topic focus
+• Output type
+🧠 Contextual Relevance
+Give AI the same context you’d give a colleague:
+• Fund name
+• Period
+• Market environment
+• Constraints
+More context → more accurate insights.
+📋 Outline Desired Format
+Tell AI how to respond:
+• Bullet points
+• Tables
+• Executive summary
+• Slide-ready text
+This saves editing time.
+🔁 Iterate & Refine
+Your first prompt is rarely perfect.
+Prompt → Review → Adjust → Repeat
+Think of it like refining analysis — not a one-shot task.
+Optional footer:
+Treat prompting like drafting — refine until it’s client-ready.
+Prompt Engineering | Key Takeaways
+🧭 Frameworks Are Guardrails — Not Cages
+COSTAR and other frameworks are starting points, not strict rules.
+Remember:
+• You don’t need every element every time
+(Quick tasks may only need Objective + Response)
+• Adapt based on task
+(Client work ≠ DAO analytics)
+• Add or remove elements freely
+• Focus on clarity, not perfection
+• The goal is better thinking → better instructions → better outputs
+Practical mindset:
+Prompt like you brief a junior analyst.
+Final closing line (strong for your session):
+Better prompts don’t just improve AI —
+they improve how we think about our work.
+If you’d like, last optional piece we can add:
+👉 3-Minute Mini Exercise slide
+(super impactful to end the session)
+Just tell me 👍
+
+
+-----------
+
+Sure — here’s another 3-minute mini exercise option you can use (slightly different flavor, more DAO + Client blended). This works well if you want something that feels closer to real HSBC AM workflows:
+Prompt Engineering | 3-Minute Mini Exercise (Alternative)
+Turn a vague prompt into a COSTAR prompt 👇
+Step 1 — Start Simple (30 seconds)
+Show this on screen:
+“Summarize this ESG report.”
+Ask the room:
+👉 What’s missing here?
+(You’ll usually hear: context, audience, format.)
+Step 2 — Rewrite Using COSTAR (1.5 minutes)
+Ask everyone to mentally add:
+✅ Which fund / theme?
+✅ What’s the objective? (risks? opportunities?)
+✅ Who is this for? (client vs internal?)
+✅ What format do you want?
+Let them rewrite in their heads (or notes).
+Step 3 — Reveal Example (1 minute)
+Show this:
+Write an internal ESG summary for the Global Equity Fund based on this report.
+Focus on top 3 material risks and key opportunities.
+Use an analytical style and professional tone.
+Audience is portfolio managers.
+Output as 3 bullet points followed by a short executive summary (under 120 words).
+Closing Line
+Same document — clearer prompt — actionable insight.
+Optional presenter question (quick engagement):
+“Who added format first?”
+“Who added audience first?”
+(Shows there’s no single right order — just clarity.)
+If you’d like, I can also give you:
+✅ ultra-short 30-second wrap-up slide
+✅ speaker notes for the exercise
+✅ combined Client + DAO version
+Just tell me — you’re basically presentation-ready now 💪
+
+
+
+
+-------------
+
+
+Ahhh — even better.
+A quiz format feels more interactive + less “corporate poll” energy. People think, not just click.
+Let’s design 3 Zoom quiz questions:
+✅ Q1 = Warm-up (awareness)
+✅ Q2 = Knowledge check
+✅ Q3 = Application / behavior change
+These work beautifully in Zoom “Quiz mode”.
+🧠 Quiz 1 — Warm-Up (Beginning of Session)
+Question:
+Which prompt is likely to give a better result?
+A) Explain fund performance.
+B) Explain Q3 performance of the Global Equity Fund, focusing on sector allocation and rate impact. Provide 3 bullets and a short summary.
+Correct Answer:
+✅ B
+Your talking point:
+“Same task — one gives AI direction, the other doesn’t.”
+This immediately frames why prompt engineering matters.
+🧠 Quiz 2 — Knowledge Check (Near the End)
+Question:
+Which COSTAR element is MOST responsible for making outputs client-ready?
+A) Context
+B) Objective
+C) Audience
+D) Response Format
+Correct Answer:
+✅ Trick question — ALL matter, but C + R together usually make the biggest difference.
+(Zoom allows “multiple correct answers” — select C and D.)
+Talking point:
+“Most people forget audience and format — that’s why outputs feel generic.”
+🧠 Quiz 3 — Application (Final Question)
+Question:
+You want a portfolio explanation for PMs, not clients. What should you change FIRST?
+A) Tone
+B) Audience
+C) Response format
+D) Add more data
+Correct Answer:
+✅ B — Audience
+Talking point:
+“Once audience changes, everything else follows.”
+Why this quiz set works
+Instead of passive polls:
+✔ They compare prompts
+✔ They test COSTAR understanding
+✔ They force real-world thinking
+✔ They reinforce audience awareness
+This makes learning stick.
+Optional mic-drop closing line:
+Prompt engineering is not about AI.
+It’s about clarity of thinking.
+If you want, I can also give you:
+🔥 One “spot the hallucination” quiz
+🔥 One DAO-only analytics quiz
+🔥 One funny/light icebreaker quiz
+Just say 😄
+
+
 
