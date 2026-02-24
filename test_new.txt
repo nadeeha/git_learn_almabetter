@@ -1,31 +1,44 @@
-Got it — for an opening Zoom poll, simpler is usually better. You mainly want something intuitive that gets everyone participating and gently introduces the Defense theme without technical depth yet.
-Here’s a cleaner, more accessible Q2:
-✅ Opening Poll (Final)
-Q1. How familiar are you with thematic portfolio signal generation?
-Very familiar — I’ve worked with it directly
-Somewhat familiar — high-level understanding
-Slightly familiar — heard of it, not hands-on
-Not familiar at all
-Q2. Which of the following would YOU most associate with a “Defense” investment theme?
-Weapons & military hardware
-Aerospace & surveillance technologies
-Cybersecurity & digital defense
-All of the above
-👉 This warms them up conceptually and sets up your point that Defense is broader than just weapons — perfect lead-in to taxonomy + L6 discovery.
-✅ Closing Poll (Context-Based)
-Q3. In our Defense example, what is the PRIMARY role of the embedding layer?
-Directly scoring company revenues
-Matching similar L6s to expand the theme universe
-Final validation of eligible companies
-Portfolio weighting
-Q4. After GenAI Flash + Pro validation, why is SME review still required?
-To manually construct portfolios
-To refine taxonomy and include/exclude L6s based on domain expertise
-To calculate revenue percentages
-To replace GenAI outputs
-Q5. When building a Defense theme, what is the biggest real-world data challenge?
-Companies don’t clearly disclose Defense-specific revenues
-Business segments are labeled inconsistently
-Revenue exposure is often bundled across segments
-All of the above
-If you’d like, I can also give you a one-sentence transition from Q2 into your workflow (something like “Exactly — Defense spans much more than hardware, which is why we start with theme definition…”).
+30-Minute Agenda
+1. Why Prompting Matters (3 mins)
+How better prompts = better insights, faster workflows, and fewer back-and-forths with AI.
+2. What Makes a Good Prompt (7 mins)
+Simple techniques + before/after examples
+From vague questions → structured, business-ready outputs.
+3. The COSTAR Framework (5 mins)
+A reusable prompt structure you can apply immediately:
+Context · Objective · Style · Tone · Audience · Response
+4. COSTAR in Action (10 mins)
+Two quick real-world examples:
+📊 Client Business use case
+🤖 DAO / Analytics use case
+5. Key Takeaways + 3-Minute Mini Exercise (5 mins)
+Top prompt habits + a short hands-on rewrite together.
+
+
+------------------------
+
+Prompt Engineering — Overview
+What is Prompt Engineering?
+It’s simply how you talk to AI to get useful results.
+Think of it like briefing a colleague:
+• Tell AI what you need
+• Share relevant context
+• Specify how you want the output
+• Give examples when helpful
+In short:
+👉 Better instructions = Better answers.
+You’re not changing the AI model —
+you’re improving how you ask the question.
+Why Does It Matter for Your Work?
+Good prompting helps you:
+✅ Get clearer, more relevant answers
+(less rework, fewer follow-ups)
+✅ Save time on analysis, drafting & summaries
+✅ Control output format
+(slides, tables, emails, bullet points)
+✅ Improve consistency across tasks
+✅ Reduce risk by guiding tone and content
+Optional closing line (very effective):
+Prompt engineering turns AI from a “chatbot” into a practical work assistant.
+
+--------------
