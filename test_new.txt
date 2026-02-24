@@ -42,3 +42,118 @@ Optional closing line (very effective):
 Prompt engineering turns AI from a “chatbot” into a practical work assistant.
 
 --------------
+
+Prompt Engineering: The New Core Skill for Working with AI
+A prompt is simply how you brief AI — your instruction, question, and context.
+❌ Vague Prompts (Hard for AI to Help)
+Write a fund commentary
+Summarize this PDF
+Explain portfolio performance
+(These sound familiar — but they don’t tell AI what matters.)
+✅ Better Prompts (Clear Business Context)
+Client Business Example
+Write a Q1 2024 fund commentary for a UK equity fund, highlighting sector rotation, top contributors/detractors, and positioning versus benchmark. Keep it client-friendly and under 300 words.
+DAO / Analytics Example
+Summarize key ESG risks and macro themes from this 10-page ESG Strategy document. Output as bullet points with a short executive summary.
+Portfolio Analytics Example
+Explain Q3 underperformance of our multi-asset fund, focusing on interest rate impact and asset allocation decisions. Format as 3 key drivers with supporting data.
+Simple Prompting Tips
+✅ Be clear about your goal
+✅ Provide context (fund, region, period, theme)
+✅ Specify output format (bullets, table, summary)
+✅ Choose role or style (client-ready, analyst tone)
+✅ Add constraints (word count, focus areas)
+Closing line (optional, powerful):
+Think of AI like a junior analyst — the better your brief, the better the result.
+
+
+
+-------------------
+
+
+Prompt Engineering Techniques
+1. X-Shot Prompting (Zero / One / Few Examples)
+Structure
+Provide examples in your prompt to show AI what good looks like.
+Zero-shot → no example
+One-shot → one example
+Few-shot → multiple examples
+Example (DAO / Client Business)
+One-shot example:
+You are a client reporting analyst.
+Example output:
+“Q2 performance was driven by overweight Industrials and underweight Technology.”
+Now summarize Q3 performance of our Global Equity Fund in the same style.
+How it works
+✅ Examples guide output style and structure
+✅ Reduces ambiguity
+✅ Improves consistency across reports
+✅ Especially useful for ESG tagging, commentary templates, and analytics summaries
+2. Role Prompting (Persona-based prompting)
+Structure
+“You are a [ROLE].
+Your task is to [TASK].
+Use this context: [DATA].
+Output in [FORMAT].”
+Example (HSBC AM)
+You are a fund analyst.
+Your task is to summarize Q2 performance of our Asia Equity Fund.
+Use this context: China weakness, strong India allocation, USD strength.
+Provide 3 bullet points followed by a short client-friendly paragraph.
+How it works
+✅ Role sets expertise level
+✅ Controls tone (client-ready vs analyst)
+✅ Improves domain relevance
+✅ Makes outputs feel professionally written
+3. Chain-of-Thought (Step-by-Step Decomposition)
+(Best for analytics & complex reasoning)
+Structure
+Ask AI to break the problem into steps before answering:
+“First… Next… Then… Finally…”
+Example (DAO / Portfolio Analytics)
+The multi-asset portfolio underperformed in Q3.
+First, identify macro drivers.
+Next, analyze asset allocation impact.
+Then, summarize sector effects.
+Finally, provide a short executive summary.
+How it works
+✅ Encourages structured reasoning
+✅ Reduces hallucination
+✅ Mimics how analysts think
+✅ Helps with performance attribution, ESG analysis, and multi-factor explanations
+Optional Closing Line for Slide
+These techniques turn AI from a chatbot into a junior analyst that follows your instructions.
+
+
+
+------------------------
+
+
+Prompt Engineering | COSTAR Framework
+A Simple Checklist for Better Prompts
+What is COSTAR?
+Think of COSTAR as your pre-flight checklist before sending a prompt.
+If you cover these 6 elements, AI gives clearer, more relevant, more usable outputs.
+COSTAR =
+C — Context
+What background does AI need?
+(Fund, region, time period, data source)
+O — Objective
+What exactly do you want done?
+(Summarize, explain, compare, analyze)
+S — Style
+How should it be written?
+(Client-friendly, analyst-level, technical)
+T — Tone
+What’s the voice?
+(Professional, concise, neutral)
+A — Audience
+Who is this for?
+(Client, PM, internal stakeholders)
+R — Response Format
+How should it be delivered?
+(Bullets, table, slide-ready text)
+
+
+----------------
+
