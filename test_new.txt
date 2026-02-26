@@ -372,5 +372,43 @@ If you want, I can also give you:
 🔥 One funny/light icebreaker quiz
 Just say 😄
 
-
+Perfect — this is a strong real-world scenario (very HSBC AM relevant).
+We’ll convert the weak prompt:
+“Summarize this report”
+…into a COSTAR-structured, investment-relevant prompt.
+Here is your final improved prompt, formatted cleanly for slide use:
+⭐ Better Prompt Using COSTAR
+[C] Context:
+You are reviewing NVIDIA’s FY2024 Sustainability Report. The objective is to assess the company’s climate-related risks and opportunities for potential inclusion in an ESG-aligned equity portfolio.
+[O] Objective:
+Identify and summarize material climate risks, transition risks, physical risks, carbon footprint exposure, and climate-related commitments relevant to investment decision-making.
+[S] Style:
+Analytical and structured, focusing on financially material insights.
+[T] Tone:
+Professional, objective, and investment-focused.
+[A] Audience:
+Internal ESG analysts and portfolio managers.
+[R] Response Format:
+Provide:
+A table summarizing:
+Climate risk category (Transition / Physical / Regulatory)
+Description
+Potential financial impact
+Mitigation actions disclosed
+Follow with a short executive summary (max 150 words) assessing suitability for ESG portfolio inclusion.
+🔎 Final Combined Prompt (Single Block Version)
+If you want to show the clean final version:
+You are an ESG analyst evaluating NVIDIA’s FY2024 Sustainability Report for potential inclusion in an ESG-aligned equity portfolio. Identify material climate-related risks (transition, physical, regulatory), carbon footprint exposure, climate commitments, and mitigation strategies. Focus only on financially material insights. Provide a table summarizing risk category, description, potential financial impact, and mitigation actions, followed by a concise executive summary (max 150 words) assessing portfolio suitability.
+Why This Is Powerful for Your Audience
+Compared to “Summarize this report,” this version:
+✅ Connects directly to investment decision-making
+✅ Specifies risk categories
+✅ Defines audience
+✅ Forces structured output
+✅ Links ESG → financial materiality
+✅ Makes it actionable for PMs
+Optional discussion question after showing this:
+“What changed the most — context, objective, or format?”
+This reinforces COSTAR thinking.
+If you want, I can also craft a slightly tougher DAO-style version (with scoring, red flags, or risk flags) to make it even sharper.
 
