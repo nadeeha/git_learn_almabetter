@@ -427,3 +427,28 @@ A) “Summarize this report.”
 B) “Summarize key climate risks from this report in table format for ESG analysts.”
 Ask:
 “Which prompt would you trust more?”
+
+
+
+If AI gives a weak answer, is it usually the model’s fault — or the prompt?”
+
+Model
+Prompt
+
+
+A) “Summarize this report.”
+B) “Summarize key climate risks from this report in table format for ESG analysts.”
+Ask:
+“Which prompt would you trust more?”
+
+Which element often makes the biggest difference between internal and client-ready outputs?
+A) Objective
+B) Tone
+C) Audience
+D) Model version
+
+Which addition MOST reduces the risk of AI fabricating information?
+A) Adding more adjectives
+B) “Use only information from the provided document.”
+C) Increasing word count
+D) Asking for more analysis
