@@ -412,3 +412,18 @@ Optional discussion question after showing this:
 This reinforces COSTAR thinking.
 If you want, I can also craft a slightly tougher DAO-style version (with scoring, red flags, or risk flags) to make it even sharper.
 
+
+
+
+
+
+If AI gives a weak answer, is it usually the model’s fault — or the prompt?”
+
+Model
+Prompt
+
+
+A) “Summarize this report.”
+B) “Summarize key climate risks from this report in table format for ESG analysts.”
+Ask:
+“Which prompt would you trust more?”
