@@ -452,3 +452,587 @@ A) Adding more adjectives
 B) “Use only information from the provided document.”
 C) Increasing word count
 D) Asking for more analysis
+
+
+
+
+“Here’s how we’ll spend the next 30 minutes.”
+Quick walkthrough:
+Why prompting matters
+What makes a good prompt
+COSTAR framework
+Real HSBC examples
+Key takeaways
+Then:
+“This is practical. You should leave today able to improve the very next prompt you write.”
+***********
+“AI is fast. But speed without clarity creates more work.”
+Then expand each part:
+Better prompts = better insights “You get analysis aligned with your objective.”
+Faster workflows “Less rewriting. Less iteration.”
+Fewer back-and-forths “You’re not correcting tone, format, or structure repeatedly.”
+Tie to HSBC AM context:
+“In client business, this means cleaner commentaries.
+In DAO, it means structured analysis.
+In ESG, it means clearer risk identification.”
+Pause.
+Then say:
+“The quality of your prompt determines whether AI behaves like a chatbot — or like a structured analyst.”
+***********
+Let me start with something simple.
+Most people think AI quality depends on the model.
+In reality — in most business use cases — output quality depends far more on how we ask the question.”
+Pause.
+“Prompt engineering is simply the skill of giving AI clear, structured instructions.”
+🔹 What It Is (Left Box)
+“It’s not technical. It’s not coding.
+It’s how we brief AI.”
+Then use this analogy:
+“If you brief a junior analyst with:
+‘Explain fund performance.’
+You’ll get something generic.
+But if you say:
+‘Explain Q3 underperformance of the Global Equity Fund, focusing on sector allocation and interest rate impact. Provide 3 bullet drivers and a short summary.’
+You’ll get something usable.”
+Then connect to bullets:
+Tell AI what you need
+Share relevant business context
+Specify the output structure
+Provide examples if needed
+“It’s about refining the input — not changing the model.”
+🔹 Why It’s Important (Right Box)
+“This matters because in our environment — clarity equals efficiency.”
+Tie directly to HSBC AM workflows:
+In Client Business → better commentaries, fewer edits
+In DAO → structured analysis, less rework
+In ESG → clearer identification of material risks
+In Portfolio reviews → cleaner attribution summaries
+Then emphasize:
+“Good prompting improves:
+Relevance
+Speed
+Consistency
+And risk control.”
+Especially important:
+“When we don’t guide tone or context, AI can produce technically correct but commercially inappropriate outputs.”
+🔹 Core Message (Land It)
+Look at the bottom line:
+Better instructions = Better answers.
+Say:
+“Prompt engineering is not about mastering AI.
+It’s about mastering clarity in how we think and communicate.”
+Pause.
+Then transition:
+“So let’s see what that looks like in practice.”
+
+**********
+
+“These are real examples of what we naturally type.”
+Read them out:
+Write a fund commentary
+Summarize this PDF
+Explain portfolio performance
+Pause.
+“These are not wrong — they’re incomplete.”
+Move to ✅ right side.
+“Now compare this.”
+Read one improved example.
+Notice what changed:
+Fund
+Quarter
+Focus area
+Output format
+Word limit
+Then say:
+“The difference is not complexity. It’s clarity.”
+Point to checklist on right:
+Be clear about your goal
+Provide context
+Specify output format
+Choose role/style
+Add constraints
+Then reinforce:
+“This is exactly how we brief a colleague.”
+***********
+So what actually makes a prompt ‘good’?”
+Pause.
+“It’s not length. It’s not complexity. It’s structure.”
+Then explain the subtitle:
+“We’re moving from vague questions to structured, business-ready outputs.”
+“In Asset Management, we don’t just need answers — we need usable outputs.”
+Then connect to real workflows:
+Commentary drafts
+ESG summaries
+Performance attribution
+Internal investment notes
+Say:
+“A good prompt makes the output immediately closer to something you’d send to a client or a PM.”
+Then transition:
+“And there are a few simple techniques that help us get there.”
+
+**********
+🔹 Technique 1: X-Shot Prompting (Zero / One / Few)
+Say:
+“This is about giving examples.”
+“If you show AI what good looks like, it imitates that structure.”
+Explain clearly:
+Zero-shot → no example
+One-shot → one example
+Few-shot → multiple examples
+Then give HSBC AM context:
+“This is extremely useful for:
+Fund commentary templates
+ESG tagging formats
+Consistent analytics summaries”
+Point to example on slide and say:
+“If we give one example sentence, AI understands tone and structure instantly.”
+Key takeaway line:
+“Examples reduce ambiguity.”
+🔹 Technique 2: Role + Task + Context + Format
+Say:
+“This is the most practical structure for daily use.”
+Walk through structure:
+Role sets expertise
+Task defines what to do
+Context ensures relevance
+Format controls usability
+Then reinforce:
+“This is essentially how we brief a junior analyst.”
+In HSBC context:
+‘You are a fund manager…’
+‘Summarize Q2 performance…’
+‘Focus on sector rotation…’
+‘Provide 3 bullets and a short paragraph…’
+Then say:
+“Notice how format alone saves editing time.”
+🔹 Technique 3: Step-by-Step (Chain-of-Thought)
+Say:
+“This is especially powerful for DAO or analytical tasks.”
+Explain simply:
+“When the problem is complex — break it down.”
+Example:
+“First identify macro drivers.
+Then analyze allocation.
+Then summarize.”
+Then say:
+“This reduces hallucination and improves reasoning.”
+In HSBC context:
+“Use this for:
+Performance attribution
+ESG materiality analysis
+Risk breakdowns”
+🔹 Wrap-Up Line for This Slide
+“These are not complicated techniques.
+They are structured thinking tools.”
+Pause.
+“When we add structure to the prompt, we get structure in the output.”
+
+***************
+“So far we’ve talked about techniques.
+Now I want to give you something you can apply immediately.”
+Pause.
+“COSTAR is a reusable structure — a simple checklist you can run through before pressing enter.”
+Then say:
+“Think of it as your pre-flight check before sending a prompt.”
+Transition:
+“Let’s break it down.”
+
+
+********
+
+COSTAR works because it reduces ambiguity.”
+“Most weak prompts fail because one of these six elements is missing.”
+🔹 C — Context
+“What background does AI need?”
+In HSBC AM terms:
+Which fund?
+Which region?
+Which quarter?
+Which benchmark?
+Which document?
+Say:
+“If you don’t give context, AI fills the gap.”
+Pause slightly.
+“And sometimes it fills it incorrectly.”
+🔹 O — Objective
+“What exactly do you want done?”
+Summarize?
+Explain?
+Compare?
+Evaluate?
+Assess financial impact?
+Say:
+“Objective defines the thinking level.”
+“Summarize” is different from “Assess materiality.”
+🔹 S — Style
+“How should it be written?”
+Client-friendly?
+Analyst-level?
+Technical?
+Tie to real scenario:
+“The same fund commentary written for a PM is very different from one written for a retail client.”
+🔹 T — Tone
+“What’s the voice?”
+Professional?
+Neutral?
+Reassuring?
+Say:
+“In Asset Management, tone matters.”
+Especially in:
+Underperformance explanations
+Risk disclosures
+ESG reporting
+🔹 A — Audience
+“Who is this for?”
+Client?
+PM?
+Investment committee?
+Internal DAO team?
+Then emphasize:
+“This is often the most forgotten element.”
+“And it changes everything.”
+🔹 R — Response
+“How should it be delivered?”
+Bullets?
+Table?
+Slide-ready text?
+Executive summary?
+Then say:
+“Response format alone can cut editing time in half.”
+🔹 Wrap-Up Line for This Slide
+“When you include these six elements, AI stops guessing.”
+Pause.
+“It starts executing.”
+🔹 Strong Transition to Next Slide
+“Now let’s see how COSTAR changes a real HSBC scenario.”
+💡 Delivery Tip
+Don’t read each definition.
+Explain each letter in 20–30 seconds conversationally.
+Keep it flowing like:
+“Context… Objective… Style… Tone… Audience… Response…”
+Like a checklist.
+
+
+
+*********
+
+Perfect 👌 — these are your impact slides.
+This is where the audience goes from “nice framework” to “I can use this tomorrow.”
+You have two versions here:
+Internal analytical explanation (underperformance drivers)
+Client-ready commentary
+I’ll give you strong, natural speaker notes for both — designed for ~6–7 minutes total.
+🎤 SLIDE 1: COSTAR in Action
+(Simple Prompt vs Structured Internal Analysis)
+Time: ~3 minutes
+Open with:
+“Let’s start with a very common request.”
+Read the weak prompt:
+‘Explain why the portfolio underperformed.’
+Pause.
+“On the surface, that seems reasonable.”
+“But what’s missing?”
+Let them think 2 seconds.
+Then say:
+“Everything.”
+Now Walk Through the COSTAR Version
+Point to Context section.
+🔹 Context
+“We specify Q3.
+We specify HSBC AM Multi-Asset Fund.
+We specify benchmark underperformance.
+We specify available inputs.”
+Then say:
+“Without this, AI guesses. With this, AI analyzes.”
+🔹 Objective
+“Not just ‘explain’.
+We say: Identify and explain main drivers using portfolio and macro factors.”
+Emphasize:
+“That pushes the AI toward analytical thinking — not storytelling.”
+🔹 Style & Tone
+“Analytical and structured.
+Professional and objective.”
+Then say:
+“If this was client-facing, tone would change.”
+Plant the seed for next slide.
+🔹 Audience
+“Internal stakeholders — PMs and DAO teams.”
+Say:
+“This tells the AI: go deeper, assume financial literacy.”
+🔹 Response Format
+“This is powerful.”
+Top 3 macro drivers
+Asset allocation impact
+Sector and regional contributors
+Executive summary
+Step-by-step reasoning
+Say:
+“Now we’ve moved from vague explanation to structured attribution analysis.”
+Pause.
+“This is analyst-ready output.”
+Close Slide 1 with:
+“Same question.
+Completely different output quality.”
+Transition:
+“Now let’s see how this changes when the audience changes.”
+🎤 SLIDE 2: COSTAR in Action
+(Client-Ready Commentary)
+Time: ~3–4 minutes
+Open with:
+“Same performance issue.
+Different audience.”
+🔹 Context
+“We now clearly state: Q3 2025 client commentary for Global Equity Fund.”
+Then highlight:
+“We even specify drivers — rate sensitivity, Energy underweight, USD strength.”
+Say:
+“This anchors the narrative.”
+🔹 Objective
+“Create a client-ready commentary.”
+Not:
+“Analyze drivers.”
+See the difference?
+🔹 Style
+“Clear, concise, avoid technical jargon.”
+Explain:
+“Internal version can say ‘duration sensitivity’.
+Client version may say ‘interest rate movements impacted performance.’”
+🔹 Tone
+“Neutral, transparent, reassuring.”
+Very important in AM.
+Especially when explaining underperformance.
+🔹 Audience
+“Institutional and retail clients.”
+Then say:
+“This changes vocabulary, depth, and framing.”
+🔹 Response Format
+This is critical.
+3 bullet drivers
+Short outlook paragraph
+Under 200 words
+Focus areas specified
+Then emphasize:
+“Response constraints dramatically reduce editing time.”
+This is a business value statement.
+🔥 Strong Wrap-Up Line for Both Slides
+“COSTAR is not about writing longer prompts.”
+Pause.
+“It’s about removing ambiguity.”
+Then:
+“Same AI model.
+Different instructions.
+Different outcome quality.”
+💡 Strategic Delivery Advice
+When presenting:
+Don’t rush.
+These slides are your proof point.
+Speak slightly slower here.
+Make eye contact.
+This is where credibility is built.
+If you’d like next:
+• Speaker notes for your closing slide
+• A powerful 60-second ending script
+• Or help tightening everything to exactly 30 minutes
+You’re very close to a polished internal masterclass 👏
+
+
+*******
+
+Perfect — this is your closing moment.
+This slide should feel practical, empowering, and memorable — not repetitive.
+You likely have ~4–5 minutes left in your 30-minute session.
+I’ll structure this as:
+• Slide 1 (Key Takeaways title) – 30 seconds
+• Slide 2 (Best Practices content) – 3–4 minutes
+• Strong 45-second closing script
+🎤 SLIDE 1: Key Takeaways
+(~30–45 seconds)
+Open calmly:
+“We’ve covered frameworks, techniques, and real HSBC examples.”
+Pause.
+“If you remember nothing else from today, remember this slide.”
+Transition to next slide.
+🎤 SLIDE 2: Best Practices & Key Takeaways
+(~3–4 minutes)
+Go section by section — not reading — but expanding slightly.
+🔹 1. Clarity & Specificity
+Say:
+“Ambiguity is the biggest cause of weak AI outputs.”
+Instead of:
+‘Summarize this.’
+Say:
+‘Summarize Q3 performance drivers in 3 bullets focusing on sector allocation.’
+Then:
+“Precision reduces hallucination.”
+🔹 2. Avoid Open-Ended Prompts
+Say:
+“When prompts are too broad, AI fills the gaps.”
+“In finance, filling gaps is risky.”
+Small smile.
+“Broad prompts increase noise.”
+🔹 3. Contextual Relevance
+Say:
+“AI doesn’t know which fund, which region, which benchmark — unless you tell it.”
+Tie it back to their work:
+“For DAO teams, context means data source.
+For Client Business, context means audience and positioning.”
+🔹 4. Outline Desired Format
+This is practical and relatable.
+“Specify bullets, tables, executive summaries.”
+Then:
+“This alone reduces editing time significantly.”
+That’s a business value statement.
+🔹 5. Continuous Iterative Refinement
+Very important point.
+“Your first prompt will rarely be perfect.”
+“Think of it like model development.”
+Test → Validate → Refine.
+That analogy will resonate strongly with DAO.
+🔹 Frameworks Are Guardrails — Not Cages
+Say:
+“COSTAR is a checklist.”
+“Not every prompt needs all six elements.”
+Quick tasks?
+Maybe just Objective + Response.
+Deeper analysis?
+Use full structure.
+🔹 Strong Line to Emphasize
+“Prompt like you brief a junior analyst.”
+Pause.
+“If you wouldn’t give vague instructions to a colleague — don’t give them to AI.”
+This lands well in corporate settings.
+🔴 REMEMBER Box (End Strong)
+Go through briefly:
+• You don’t need every element every time
+• Adapt based on task
+• Focus on clarity
+• Better thinking → Better instructions → Better outputs
+Then slow down slightly.
+🎤 Final 45-Second Closing Script
+End confidently:
+“Prompt engineering is not about technical tricks.”
+“It’s about structured thinking.”
+“The AI model stays the same.”
+“What changes is how clearly we instruct it.”
+Pause.
+“And in a business environment like Asset Management, clarity is leverage.”
+Final line:
+“Better prompts don’t just save time — they improve decision quality.”
+Smile.
+“Thank you — and I’d love to hear how you plan to apply this.”
+⏱️ Total Timing Check (Full Session)
+Intro + Why it Matters → 5–6 min
+Techniques → 5–6 min
+COSTAR Breakdown → 5 min
+COSTAR in Action → 6–7 min
+Mini Exercise → 3 min
+Takeaways + Close → 4–5 min
+You’ll land around 28–30 minutes comfortably.
+If you'd like next:
+• A polished Q&A handling guide
+• Or a confidence rehearsal script for the full 30 mins
+• Or a one-slide summary you can share post-session
+You’re delivering this at a very strong internal workshop level 👏
+
+*******
+
+Excellent. These are your last two moments:
+The ESG activity slide (interactive reinforcement)
+The Closing Note (emotional + intellectual finish)
+This is where you shift from teaching a framework → to changing how they think.
+Let’s script this properly.
+🎤 SLIDE: Activity – Suggest a Better Prompt
+(~3 minutes total)
+Open with energy:
+“Let’s test this.”
+Read the weak prompt:
+‘Summarize this report.’
+Pause.
+“In Asset Management, that’s dangerous.”
+Then explain scenario:
+“You’ve uploaded NVIDIA’s Sustainability Report.
+You need to assess climate-related risks for ESG inclusion.”
+Then ask the room:
+“What’s missing?”
+Let 2–3 people respond: • Context
+• Objective
+• Audience
+• Format
+Then walk them through your structured version on the right.
+How to Explain the Structured Version
+🔹 Context
+“We’re reviewing NVIDIA’s FY2024 Sustainability Report.”
+This eliminates ambiguity.
+🔹 Objective
+“Assess climate risks and opportunities for ESG inclusion.”
+Not summarize.
+Assess.
+That’s a higher-order task.
+🔹 Style
+“Analytical and financially material.”
+Important phrase: “Financially material.”
+This resonates strongly in AM.
+🔹 Audience
+“Internal ESG analysts and PMs.”
+Depth changes immediately.
+🔹 Response Format
+This is where you emphasize value.
+Table:
+Risk category
+Description
+Financial impact
+Mitigation actions
+Plus:
+150-word executive summary
+Then say:
+“This is now investment-ready output.”
+Pause.
+“Not just a report summary.”
+🎤 Transition to Closing
+“Now I want to leave you with one thought.”
+Slow down slightly.
+Go to Closing Slide.
+🎤 SLIDE: Closing Note
+(~1–1.5 minutes)
+Read it slowly:
+“Better prompts don’t just improve AI;
+they improve how we think about our work.”
+Then expand:
+“When you structure a prompt, you clarify your objective.”
+“When you clarify your objective, you clarify your thinking.”
+Pause.
+“In Asset Management, structured thinking is alpha.”
+Let that sit.
+Then:
+“AI doesn’t replace expertise.”
+“It amplifies structured expertise.”
+Pause.
+“And the structure starts with how we ask.”
+🔥 Strong Final Line Options (Pick One)
+Option 1 (Professional close): “Same model.
+Different instructions.
+Different quality of insight.”
+Option 2 (Strategic close): “Prompting is not about controlling AI.
+It’s about sharpening our analytical discipline.”
+Option 3 (Memorable close): “If you wouldn’t brief a junior analyst vaguely,
+don’t brief AI vaguely.”
+That one usually lands very well.
+🎯 Final Energy Advice
+End steady. Not rushed.
+Smile.
+Invite: “I’d love to hear one real use case you’re planning to try this week.”
+That makes it actionable.
+⏱ Your Full 30-Minute Structure Now Looks Strong
+Intro & Why → 5 min
+Techniques → 6 min
+COSTAR → 5 min
+COSTAR in Action → 7 min
+Activity → 3 min
+Takeaways + Close → 4 min
+You are at a very polished internal training level now.
+If you want, I can also give you:
+• A 5-question Q&A prep sheet
+• A confidence rehearsal script
+• Or a one-slide executive summary to circulate after session
+This will be a strong session at HSBC AM.
+
