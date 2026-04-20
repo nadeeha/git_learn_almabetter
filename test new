@@ -1,0 +1,117 @@
+Perfect — let’s make this very specific, realistic, and demo-ready so it feels like a real analyst task, not a generic showcase.
+💡 Specific Use Case:
+“Quick ESG Due Diligence for Investment Decision (2 Companies)”
+🧩 1. Problem Statement (Very Real Scenario)
+A Portfolio Manager asks:
+“We are evaluating whether to increase exposure to one of these companies. Can you quickly assess ESG strength and risks from their latest reports?”
+Analyst Task:
+Compare 2 companies based on:
+ESG disclosures
+Risks / controversies
+Sustainability positioning
+❌ Challenge:
+Each report is ~150–250 pages
+Time available: < 30 minutes
+Manual review would take hours
+🎯 2. Demo Scenario (Concrete)
+Compare:
+Tesla, Inc.
+Reliance Industries Limited
+📂 Files uploaded into internal tool:
+Tesla Impact / ESG Report (PDF)
+Reliance Annual / Sustainability Report (PDF)
+👉 Total: 2 PDFs (fits tool limitation)
+🚀 3. What You Are Demonstrating
+👉 Not building anything
+👉 Using existing internal AI assistant to:
+Extract ESG insights
+Identify risks
+Compare companies
+Support a quick investment decision
+⚙️ 4. Exact Task You Perform in Demo
+You say:
+👉 “Let’s simulate a real analyst request — quick ESG due diligence before increasing portfolio exposure.”
+Then you run ONE strong prompt 👇
+🧠 5. COSTAR Prompt (Highly Targeted)
+📊 COSTAR Table
+Component
+Description
+C – Context
+You are assisting an ESG analyst performing due diligence using company reports.
+O – Objective
+Evaluate ESG strength and highlight risks to support an investment decision.
+S – Style
+Structured, comparison-focused, decision-oriented.
+T – Tone
+Analytical and concise.
+A – Audience
+Portfolio Manager making investment decision.
+R – Response Format
+ESG summary, key metrics, risks, recommendation.
+💬 Final Prompt Used in Demo
+Writing
+You are assisting an ESG analyst performing quick due diligence using company annual and ESG reports.
+Objective:
+Summarize ESG performance for each company
+Highlight any risks or controversies
+Compare both companies
+Provide a recommendation on which company has stronger ESG positioning for investment consideration
+Style: Structured and comparison-focused
+Tone: Analytical and concise
+Audience: Portfolio Manager
+Response Format:
+ESG Summary (company-wise)
+Key ESG Metrics Comparison Table
+Risks / Controversies
+Investment Recommendation (with reasoning)
+Use only the provided document context.
+📊 6. Example Output (What You Show)
+🏢 ESG Summary
+Tesla
+Strong environmental focus (electric vehicles, clean energy)
+Clear sustainability narrative
+Reliance
+Diversified operations with ongoing energy transition
+ESG improving but legacy fossil exposure
+📈 Key ESG Metrics Comparison
+Metric
+Tesla
+Reliance
+Carbon Emissions
+Low
+High (transition phase)
+Renewable Focus
+High
+Medium
+ESG Disclosure
+Strong
+Moderate
+⚠️ Risks / Controversies
+Tesla → Supply chain and governance concerns
+Reliance → Fossil fuel dependency, transition risk
+🏁 Investment Recommendation
+👉 Tesla shows stronger ESG positioning due to:
+Core business aligned with sustainability
+Lower environmental risk profile
+👉 Reliance:
+Improving but still exposed to transition risks
+🎤 7. What You Say During Demo (Very Crisp)
+👉 “This is a real use case — ESG due diligence before increasing exposure.”
+👉 “Instead of manually reading 200-page reports, we upload just 2 PDFs.”
+👉 “Using a structured COSTAR prompt, we get a consistent, decision-ready output.”
+👉 “This reduces analysis time from hours to minutes.”
+🔥 8. Why This Use Case Works PERFECTLY
+✅ Extremely realistic (PM request)
+✅ Small scope (2 PDFs → fits tool constraint)
+✅ Clear business impact (investment decision)
+✅ Shows:
+ESG understanding
+Structured prompting
+Immediate value
+💡 Closing Line (Strong Impact)
+👉 “Even with just 2 documents, this enables faster, more consistent ESG decision-making — and that’s where the real value lies.”
+If you want, I can next:
+Turn this into a perfect 1-slide visual (very clean)
+Or give you a scripted 2-minute delivery (word-by-word)
+Or tailor this specifically for your HSBC / DAO audience tone
+Just tell me 👍
