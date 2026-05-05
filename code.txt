@@ -1,0 +1,116 @@
+import pandas as pd
+import numpy as np
+
+# ---------------------------------------------------------------
+# CONFIG
+# ---------------------------------------------------------------
+INPUT_PATH = 'your_dataset.csv'          # <-- update
+OUTPUT_PATH = 'rerun_sample.csv'
+SEED = 42
+MIN_ROWS_PER_ENTITY = 3                  # drop ISINs with fewer rows
+
+# Allocation: 60 entities total
+HIGH_DISP_ALLOC = {'Low': 10, 'Mid': 20, 'High': 10}   # 40
+LOW_DISP_ALLOC  = {'Low': 7,  'Mid': 6,  'High': 7}    # 20
+
+# Score band cutoffs (mean ent_match_level)
+SCORE_BINS = [-0.01, 40, 70, 100]
+SCORE_LABELS = ['Low', 'Mid', 'High']
+
+# ---------------------------------------------------------------
+# 1. LOAD
+# ---------------------------------------------------------------
+df = pd.read_csv(INPUT_PATH)
+# Expected columns: isin, bus_seg_name, ent_match_level
+# Adjust column names below if yours differ.
+
+# ---------------------------------------------------------------
+# 2. AGGREGATE TO ENTITY LEVEL
+# ---------------------------------------------------------------
+agg = df.groupby('isin').agg(
+    n_rows=('ent_match_level', 'size'),
+    mean_score=('ent_match_level', 'mean'),
+    std_score=('ent_match_level', 'std'),
+    min_score=('ent_match_level', 'min'),
+    max_score=('ent_match_level', 'max'),
+).reset_index()
+
+agg['range_score'] = agg['max_score'] - agg['min_score']
+
+# ---------------------------------------------------------------
+# 3. FILTER LOW-INFO ENTITIES
+# ---------------------------------------------------------------
+before = len(agg)
+agg = agg[agg['n_rows'] >= MIN_ROWS_PER_ENTITY].copy()
+print(f"Filtered {before - len(agg)} entities with <{MIN_ROWS_PER_ENTITY} rows. "
+      f"{len(agg)} remain.")
+
+# ---------------------------------------------------------------
+# 4. ASSIGN DISPERSION BUCKETS AND SCORE BANDS
+# ---------------------------------------------------------------
+agg['disp_bucket'] = pd.qcut(
+    agg['std_score'], q=4, labels=['Q1_low', 'Q2', 'Q3', 'Q4_high']
+)
+agg['score_band'] = pd.cut(
+    agg['mean_score'], bins=SCORE_BINS, labels=SCORE_LABELS
+)
+
+# ---------------------------------------------------------------
+# 5. STRATIFIED SAMPLING
+# ---------------------------------------------------------------
+rng = np.random.RandomState(SEED)
+
+def sample_cell(group, n):
+    if len(group) == 0 or n == 0:
+        return group.iloc[0:0]
+    return group.sample(min(len(group), n), random_state=rng)
+
+def stratified_sample(pool, allocation, stratum_label):
+    parts = []
+    shortfall = 0
+    for band, n in allocation.items():
+        cell = pool[pool['score_band'] == band]
+        picked = sample_cell(cell, n)
+        parts.append(picked)
+        shortfall += max(0, n - len(picked))
+        if len(picked) < n:
+            print(f"  [{stratum_label}/{band}] requested {n}, got {len(picked)}")
+    
+    # Redistribute shortfall within same dispersion bucket
+    if shortfall > 0:
+        already = pd.concat(parts)
+        remaining = pool[~pool['isin'].isin(already['isin'])]
+        extra = sample_cell(remaining, shortfall)
+        parts.append(extra)
+        print(f"  [{stratum_label}] redistributed {len(extra)} extras")
+    
+    out = pd.concat(parts)
+    out['stratum'] = stratum_label
+    return out
+
+print("\nSampling high-dispersion (Q4):")
+high_pool = agg[agg['disp_bucket'] == 'Q4_high']
+high_sample = stratified_sample(high_pool, HIGH_DISP_ALLOC, 'high_disp')
+
+print("\nSampling low-dispersion (Q1):")
+low_pool = agg[agg['disp_bucket'] == 'Q1_low']
+low_sample = stratified_sample(low_pool, LOW_DISP_ALLOC, 'low_disp')
+
+selected = pd.concat([high_sample, low_sample], ignore_index=True)
+
+# ---------------------------------------------------------------
+# 6. SUMMARY
+# ---------------------------------------------------------------
+print(f"\nTotal selected: {len(selected)}")
+print("\nBy stratum x score_band:")
+print(selected.groupby(['stratum', 'score_band'], observed=True).size())
+print("\nDispersion stats of selection:")
+print(selected[['n_rows', 'mean_score', 'std_score', 'range_score']].describe())
+
+# ---------------------------------------------------------------
+# 7. SAVE
+# ---------------------------------------------------------------
+cols_out = ['isin', 'stratum', 'score_band', 'disp_bucket',
+            'n_rows', 'mean_score', 'std_score', 'range_score']
+selected[cols_out].to_csv(OUTPUT_PATH, index=False)
+print(f"\nSaved to {OUTPUT_PATH}")
