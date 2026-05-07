@@ -1,25 +1,51 @@
-# Cell 1 — install if needed
-!pip install plotly pandas numpy
+I have a Python script that builds an interactive Plotly HTML stability dashboard for entity-level prompt reruns. The dataframe has columns including isin, entity_proper_name, issuer_description, ENT_MATCH_1 through ENT_MATCH_5, ENT_MATCH_band_1 through _5, score_confidence_1 through _5, descriptionSpecificity_1 through _5, and rationale_ENT_MATCH_1 through _5. There is also a new column v2_ent_match_list containing a Python list of numerical ENT_MATCH scores from a previous prompt version (variable number of runs per entity, not necessarily 5).
+Make the following modifications to the existing script. Do not rewrite the script — preserve its structure, function names, helper functions, hover-text format, and existing charts 2, 3, 4, 5. Only add or modify the parts described below.
+Modification 1: Enhance Chart 1 (per-entity strip plot) to show v2 vs current side by side.
+For each entity, plot two horizontal rows instead of one:
+Top row (offset +0.2 from entity index): v2 scores from v2_ent_match_list, in gray (e.g., #999999), opacity 0.6.
+Bottom row (offset −0.2 from entity index): current scores from ENT_MATCH_1 to ENT_MATCH_5, in steelblue, opacity 0.65.
+On each row, draw a thin subtle red line spanning from min to max of that row's points (color red, opacity 0.3, width 1, behind the points). This is the range indicator.
+On the current (bottom) row only, add three distinct markers:
+Mean: red vertical bar marker (symbol='line-ns', size 14), label "Mean" in legend group.
+Median: orange diamond marker (symbol='diamond', size 9), label "Median" in legend group.
+Mode value: green square marker (symbol='square', size 9), label "Mode" in legend group. The mode value is computed as the most frequently occurring score in the 5 reruns. If all 5 are different, omit the marker for that entity.
+For mode computation, also compute mode_count = number of times the mode value appeared (1 to 5). If mode_count == 1 (no repeats), set mode value to None and skip the marker.
+Keep the y-axis labels on entity index positions (integer positions), not on the offset positions. Use entity_proper_name falling back to isin. Sort entities by current ENT_MATCH std dev ascending, same as before.
+Update the hover text for current-row points to include: mean, median, mode value with count (e.g., "Mode: 60 (×3)" or "Mode: no repeats"), range (min–max), std dev. Hover for v2 points should show v2's mean, median, and range.
+The existing band-boundary vertical lines (25, 50, 75) and band labels at top remain unchanged.
+Modification 2: Add a delta chart immediately after Chart 1.
+Title it "Chart 1b: Stability change (current vs v2)".
+For each entity, compute delta_std = std(current) − std(v2_ent_match_list). Plot as a horizontal bar chart:
+y-axis: same entity ordering as Chart 1 (sorted by current std dev ascending), same labels.
+x-axis: delta_std, with x=0 line drawn prominently.
+Bars where delta_std < 0 (improved) colored green; bars where delta_std > 0 (regressed) colored red.
+Hover should show: entity name, current std, v2 std, delta.
+Insert this chart's HTML immediately after Chart 1 in the assembled HTML output, with its own <h2> heading.
+Modification 3: Replace the existing standalone confidence calibration with a paired side-by-side strip plot.
+Create a new chart titled "Chart 4: Confidence and Specificity stability per entity" that uses plotly.subplots.make_subplots(rows=1, cols=2, shared_yaxes=True) to place two strip plots side by side:
+Left subplot: per-entity strip plot of score_confidence_1 to _5 values. X-axis 0 to 1.
+Right subplot: per-entity strip plot of descriptionSpecificity_1 to _5 values. X-axis 0 to 1.
+Both subplots use the same entity ordering as Chart 1 (sorted by current ENT_MATCH std dev ascending).
+Y-axis labels appear on the left subplot only.
+Each subplot shows individual run dots plus a mean marker per entity.
+Hover shows the entity context, all 5 values, mean, std dev for that metric.
+This replaces the existing Chart 4 (single-scatter confidence vs std dev) entirely. Remove the old Chart 4 code and HTML insertion.
+Modification 4: Add a new Chart 4b for per-entity within-run correlation.
+Title: "Chart 4b: Within-entity confidence calibration (per-run correlation)".
+For each entity, compute the Pearson correlation between its 5 ENT_MATCH values and its 5 score_confidence values across runs. Skip entities where either series has zero variance (correlation undefined). Store as per_entity_corr.
+Plot as a histogram of these correlation values, x-axis from −1 to 1, with a vertical line at x=0. Annotate: "Negative correlation = confidence is calibrated (when score drifts, confidence drops)". Add summary text noting how many entities had calibrated (negative r), uncalibrated (near-zero r), and inverse-calibrated (positive r) behavior.
+Place this immediately after Chart 4 in the HTML output.
+Modification 5: Update the "How to read this dashboard" interpretation block.
+Add or update interpretation paragraphs for: Chart 1b (delta chart), the new combined Chart 4 (confidence + specificity strips), and Chart 4b (within-entity correlation). Keep existing interpretation for Charts 2, 3, 5.
+Modification 6: Update the headline summary table.
+Add three new metrics:
+"Median delta std dev (current − v2)" — median of delta_std across entities.
+"Entities improved (delta < 0)" — count and percentage.
+"Entities with calibrated confidence (r < −0.3)" — count and percentage from per_entity_corr.
+Constraints:
+Do not change function signatures of build_dashboard other than to optionally add a parameter if needed. The existing build_dashboard(df, output_path, n_runs, title) call must still work.
+Handle missing or malformed v2_ent_match_list gracefully (e.g., if it's a string representation of a list, parse it; if it's NaN, skip v2 plotting for that entity).
+Preserve the existing CDN-based plotly loading and the self-contained HTML structure.
+All new code should follow the existing style (helper functions named with leading underscore, hover text built via _build_hover_text-style functions, etc.).
+After making the changes, summarize what was modified so I can verify.
 
-# Cell 2 — import and run
-import sys
-sys.path.append('/path/to/folder/containing/script')  # if not in same folder
-from stability_dashboard import build_dashboard
-import pandas as pd
-
-# Load your rerun results
-df = pd.read_csv('rerun_results.csv')
-
-# Build the dashboard
-stats = build_dashboard(
-    df,
-    output_path='stability_dashboard.html',
-    n_runs=5,
-    title='Defense theme — entity prompt stability (Short variant, Gemini 2.5 Pro)'
-)
-
-# Optionally inspect the per-entity stats inline
-stats.head()
-
-from IPython.display import IFrame
-IFrame('stability_dashboard.html', width='100%', height=800)
