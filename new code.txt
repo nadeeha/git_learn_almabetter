@@ -1,0 +1,70 @@
+Prompt for Codex:
+I need a Python script that builds an interactive Plotly HTML dashboard to test the stability of a two-stage taxonomy classification pipeline (Flash 2.5 → Pro 2.5 validator) across 5 reruns. The task classifies revenue stream taxonomies (L1–L6 hierarchy) against an investment theme, producing categorical confidence labels (High/Medium/Low) and validation flags.
+Input data format:
+Wide-format CSV. Each row is one L6 category. Columns include:
+Identifier columns: L1_ID, L1_NAME, L1_DESCRIPTION, L2_ID, L2_NAME, L2_DESCRIPTION, ..., L6_ID, L6_NAME, L6_DESCRIPTION
+Flash outputs across 5 runs:
+flash_confidence_{theme}_1 through _5 — categorical, values in {High, Medium, Low}
+flash_confidence_reason_{theme}_1 through _5 — text rationale
+prob_flash_{theme}_1 through _5 — numeric logprob (negative float)
+Pro outputs across 5 runs:
+pro_confidence_{theme}_1 through _5 — categorical, post-validation final confidence in {High, Medium, Low}
+pro_confidence_reason_{theme}_1 through _5 — text rationale (judge reason)
+pro_validation_{theme}_1 through _5 — categorical, values in {Valid, Invalid}
+pro_validation_reason_{theme}_1 through _5 — text rationale for validation
+The {theme} is a literal string in the column names (e.g., flash_confidence_Defense_1). The script must auto-detect the theme by scanning column names matching the pattern flash_confidence_(.+)_1.
+Required script structure:
+Build a module with a build_dashboard(df, output_path, title) function. Follow the same architectural pattern as the entity stability dashboard (Plotly subplots, hover tooltips, headline summary table, "how to read" interpretation block, self-contained HTML with Plotly loaded via CDN).
+Metrics to compute, per L6 row:
+Flash confidence agreement: modal Flash confidence value, count of how many of 5 runs landed in the modal value, agreement rate (modal count / 5).
+Pro confidence agreement: same as Flash, on pro_confidence columns.
+Pro validation agreement: modal validation (Valid/Invalid), count, agreement rate.
+Flash logprob stats: mean, std dev, min, max across the 5 runs.
+Flash↔Pro per-run agreement: for each of the 5 runs, does Flash confidence == Pro confidence? Output: agreement count out of 5 (i.e., how many runs Flash and Pro agreed on).
+Override rate: of the 5 runs, in how many did Pro produce a different confidence from Flash (override count / 5).
+Override direction: when Pro overrode Flash, count upgrades (e.g., Flash=Low → Pro=Medium or High) vs downgrades (Flash=High → Pro=Medium or Low). Use the ordering Low < Medium < High.
+Reason similarity (Jaccard) — per-row: for both Flash reasons and Pro reasons separately, compute pairwise Jaccard similarity of word sets (lowercased, alphabetic tokens only, stopwords removed using a small built-in stopword list — no external NLP dependencies). Output: mean pairwise Jaccard across the 10 pairs (C(5,2)) for Flash reasons, same for Pro reasons. Higher = more similar = more stable reasoning.
+Aggregate metrics for the headline summary table:
+Median Flash confidence agreement rate
+Median Pro confidence agreement rate
+Median Pro validation agreement rate
+Median Flash↔Pro per-run agreement
+Median Flash logprob mean
+Median reason Jaccard similarity (Flash and Pro separately)
+Count of rows with Flash agreement < 5/5
+Count of rows with Pro agreement < 5/5
+Count of rows where Pro overrode Flash in ≥3 of 5 runs
+Count of rows where Pro validation flipped at least once (i.e., not all 5 runs same)
+Visualizations to produce (interactive Plotly, in this order):
+Chart 1 — Headline strip plot. One row per L6 category, sorted by Flash agreement rate ascending (worst at top). For each L6, plot two parallel mini-strips:
+Top strip: 5 Flash confidence values as colored dots (red=Low, orange=Medium, green=High), at fixed x-positions 1, 2, 3, 4, 5
+Bottom strip: 5 Pro confidence values, same color scheme
+Use L6_NAME as the y-axis label, falling back to L6_ID. Hover for each L6 shows: full L6 name, L6 description (truncated to 200 chars), modal Flash, modal Pro, both agreement rates, override count, validation agreement, mean logprob, and the first run's Flash reason (truncated to 300 chars).
+Add a dropdown filter above the chart to filter rows by: All / Flash unstable (<5/5) / Pro unstable (<5/5) / Cascade disagreement (Flash↔Pro <3/5).
+Chart 2 — Agreement rate distributions. Three histograms side by side: Flash agreement rate, Pro agreement rate, Pro validation agreement rate. X-axis: rate (1/5, 2/5, 3/5, 4/5, 5/5). Show counts.
+Chart 3 — Flash vs Pro confusion matrix. 3×3 heatmap aggregated across all rows and all 5 runs (i.e., total of N_rows × 5 (Flash, Pro) pairs). Rows = Flash confidence, columns = Pro confidence. Cell values = count. Diagonal = agreement, off-diagonal = override. Add row/column totals.
+Chart 4 — Override direction. Stacked horizontal bar showing: of all override cases (Flash ≠ Pro on the same run), what fraction were upgrades vs downgrades, broken down by Flash starting confidence (Low/Medium/High). Three bars total, each split into upgrade/downgrade segments.
+Chart 5 — Validation flip rate. Bar chart showing distribution of validation agreement rates (how many of 5 runs landed on the modal Valid/Invalid value). Most rows should be at 5/5 if Pro validation is stable.
+Chart 6 — Reason similarity distribution. Two overlaid histograms: Flash reason Jaccard similarity and Pro reason Jaccard similarity, range 0–1. Higher mass at right = more stable reasoning. Annotate the median of each.
+Chart 7 — Logprob vs Flash stability. Scatter plot. X-axis: mean Flash logprob (more negative = less confident). Y-axis: Flash agreement rate. Test whether Flash's own logprob predicts its stability. Add Pearson correlation in the title.
+Chart 8 — Edge-case table. HTML table (not Plotly) listing all rows where Flash agreement < 4/5 OR Pro agreement < 4/5 OR Flash↔Pro agreement < 3/5. Columns: L6 name, L6 description (truncated), Flash modal + agreement, Pro modal + agreement, override count, mean logprob, Flash reason from run 1 (truncated). Sortable if possible (use a basic HTML <table> with class for styling).
+Interpretation block ("How to read this dashboard"):
+Include a clear section explaining what each chart shows and how to read it for stakeholders. Key points to cover:
+Categorical agreement rates are the headline metric, not std dev
+5/5 agreement = perfectly stable, 3/5 or less = unstable
+Override rate measures how much work Pro is doing vs rubber-stamping
+Reason Jaccard similarity is a rough text-based stability check (lexical, not semantic)
+Logprob calibration check tells you whether Flash's own confidence signal is meaningful
+Implementation requirements:
+Use Plotly graph_objects (not Plotly Express) for fine control over hover and styling
+Use plotly.subplots.make_subplots where needed
+Use plotly.io.to_html with include_plotlyjs='cdn' for the first chart, include_plotlyjs=False for subsequent charts
+Wrap everything in a single HTML document with embedded CSS for clean rendering
+Auto-detect theme from column names — raise a clear error if multiple themes detected or none found
+Validate that all expected columns exist; warn (don't fail) if some runs are missing
+Handle NaN values gracefully (skip that run for that row, don't crash)
+Use no external NLP libraries — implement Jaccard from scratch with a small built-in stopword list (the, a, an, of, to, in, for, and, or, is, are, was, were, be, been, being, have, has, had, this, that, these, those, with, on, at, by, from, as, but, not, no)
+All helper functions named with leading underscore
+The function signature is build_dashboard(df: pd.DataFrame, output_path: str = 'taxonomy_stability_dashboard.html', title: str = None) -> pd.DataFrame and returns the per-L6 stats dataframe
+Also provide a CLI entry point: python script.py input.csv output.html
+After making the script, print a usage example showing how to call it from a notebook.
